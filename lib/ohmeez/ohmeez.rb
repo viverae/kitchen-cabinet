@@ -1,16 +1,17 @@
 class Meez
   require 'fileutils'
+  require 'erb'
   def self.init(cookbook_name, options)
-    @tool = {'chef', 'knife', 'git', 'berkshelf', 'kitchen', 'guard', 'chefspec', 'strainer', 'rubocop', 'foodcritic', 'serverspec', 'stove'}
+    @tool = ['chef', 'knife', 'git', 'berkshelf', 'kitchen', 'guard', 'chefspec', 'strainer', 'rubocop', 'foodcritic', 'serverspec', 'stove']
     init_service(tool, cookbook_name, options)
-    @template = {'chefignore', '.gitignore', 'Gemfile', 'Berksfile', '.kitchen.yml', 'Guardfile', 'Strainerfile', '.rubocop.yml', 'chefspec', 'serverspec'}
+    @template = ['chefignore', '.gitignore', 'Gemfile', 'Berksfile', '.kitchen.yml', 'Guardfile', 'Strainerfile', '.rubocop.yml', 'chefspec', 'serverspec']
     write_configs(template, cookbook_name, options)
   end
 
   def self.init_service(tool, cookbook_name, options)
     puts "* Initializing #{tool}"
     path = File.join(options[:path], cookbook_name)
-    if @tool = "chef"
+    if @tool == "chef"
       require 'chef/knife/cookbook_create'
       create_cookbook = Chef::Knife::CookbookCreate.new
       create_cookbook.name_args = [cookbook_name]
@@ -25,11 +26,11 @@ class Meez
         File.open(File.join(path, file), 'w') { |f| f.write(contents) }
       end
     end
-    if @tool = "git"
+    if @tool == "git"
       require 'git'
       Git.init( path, { repository: path } )
     end
-    if @tool = "berkshelf"
+    if @tool == "berkshelf"
       require 'berkshelf'
       require 'berkshelf/base_generator'
       require 'berkshelf/init_generator'
@@ -41,16 +42,16 @@ class Meez
         }
       ).invoke_all
     end
-    if @tool = "kitchen"
+    if @tool == "kitchen"
       require 'kitchen'
       require 'kitchen/generator/init'
       Kitchen::Generator::Init.new([], {}, destination_root: path).invoke_all
     end
-    if @tool = "chefspec"
+    if @tool == "chefspec"
       spec_path = File.join(path, 'spec')
       FileUtils.mkdir_p(spec_path)
     end
-    if @tool = "serverspec"
+    if @tool == "serverspec"
       spec_path = File.join(path, 'test', 'integration', 'default', 'serverspec')
       FileUtils.mkdir_p(spec_path)
     end
@@ -59,15 +60,15 @@ class Meez
   def self.write_configs(template, cookbook_name, options)
     path = File.join(options[:path], cookbook_name)
     @template.each do |template|
-      @spec = {'spec_helper.rb', 'default_spec.rb'}
-      if @template = "chefspec"
+      @spec = ['spec_helper.rb', 'default_spec.rb']
+      if @template == "chefspec"
         spec_path = File.join(path, 'spec')
         erb "chefspec/#{spec}.erb" > "#{spec_path}/#{spec}"
-      elsif @template = "serverspec"
+      elsif @template == "serverspec"
         spec_path = File.join(path, 'spec')
         erb "serverspec/#{spec}.erb" > "#{spec_path}/#{spec}"
       end
       erb "templates/#{template}.erb" > "#{path}/#{template}"
     end
-     # for both chefspec and serverspec - 'spec_helper.rb', 'default_spec.rb'
+  end
 end
