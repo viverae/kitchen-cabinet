@@ -1,0 +1,51 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+  environments_path: "test/integration/environments"
+  data_bag_path: "test/integration/data_bags"
+  require_chef_omnibus: 11.8.2
+  solo_rb:
+    environment: test
+
+platforms:
+- name: canonical-ubuntu-12.04
+  driver_config:
+    box: canonical-ubuntu-12.04
+    box_url: https://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box
+  run_list:
+  - recipe[or::default]
+
+suites:
+- name: default
+  run_list:
+    - recipe[<%= #{cookbook_name}%>::social_web_app]
+  attributes:
+    or:
+      pkg:
+        ubuntu:
+          or: "http://mirrors.onehealth.com/or"
+          source: "http://mirrors.onehealth.com/ubuntu"
+      contact:
+        email: <%= Etc.getpwuid(Process.uid).name %>@onehealth.com
+      environment: "test"
+      cluster: "unknown"
+      realm:   "unknown"
+      location: "cld"
+      default:
+        vhostdomain: "dev"
+        branch: "master"
+    apache:
+      version: "2.4"
+    or_social:
+      app_name: "social"
+    or_admin:
+      app_name: "admin"
+    or_callbacks:
+      app_name: "callbacks"
+    or_scache:
+      app_name: "scache"
+    camo:
+      key: "foo"
