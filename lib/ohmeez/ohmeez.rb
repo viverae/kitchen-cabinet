@@ -1,4 +1,4 @@
-class Meez
+class Ohmeez
   require 'fileutils'
   require 'erb'
   def self.init(cookbook_name, options)
