@@ -1,6 +1,5 @@
 class Ohmeez
   require 'fileutils'
-  require 'erb'
   def self.init(cookbook_name, options)
     init_service(cookbook_name, options)
     write_configs(cookbook_name, options)
@@ -65,27 +64,31 @@ class Ohmeez
     path = File.join(options[:path], cookbook_name)
     @template.each do |template|
       @spec = ['spec_helper.rb', 'default_spec.rb']
-      if @template == "chefspec"
+      if template == "chefspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          FileUtils.touch(spec_path + "#{template}")
-          fname = File.dirname(__FILE__) + "/templates/chefspec/#{spec}.erb"
-          erb_template = ERB.new File.read(fname)
-          File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(erb_template) }
+          FileUtils.touch("spec_path" + "#{spec}")
+          fname = File.open(File.realpath("lib/ohmeez/chefspec/#{spec}")) { |file_template|
+            contents = file_template.read
+            File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(file_template) }
+          }
         end
-      elsif @template == "serverspec"
+      elsif template == "serverspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          FileUtils.touch(spec_path + "#{template}")
-          fname = File.dirname(__FILE__) + "/templates/serverspec/#{spec}.erb"
-          erb_template = ERB.new File.read(fname)
-          File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(erb_template) }
-        end
+          FileUtils.touch(spec_path + "#{spec}")
+          fname = File.open(File.realpath("lib/ohmeez/serverspec/#{spec}")) { |file_template|
+            contents = file_template.read
+            File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(file_template) }
+          }
+         end
+      else
+        FileUtils.touch(path + "#{template}")
+        fname = File.open(File.realpath("lib/ohmeez/templates/#{template}")) { |file_template|
+          contents = file_template.read
+          File.open(File.join(path, "#{template}"), 'w') { |f| f.write(file_template) }
+          }
       end
-      FileUtils.touch(path + "#{template}")
-      fname = File.dirname(__FILE__) + "/templates/#{template}.erb"
-      erb_template = ERB.new File.read(fname)
-      File.open(File.join(path, "#{template}"), 'w') { |f| f.write(erb_template) }
     end
   end
 end
