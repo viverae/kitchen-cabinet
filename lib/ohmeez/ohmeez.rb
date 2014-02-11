@@ -2,16 +2,15 @@ class Ohmeez
   require 'fileutils'
   require 'erb'
   def self.init(cookbook_name, options)
-    @tool = ['chef', 'knife', 'git', 'berkshelf', 'kitchen', 'guard', 'chefspec', 'strainer', 'rubocop', 'foodcritic', 'serverspec', 'stove']
-    init_service(@tool, cookbook_name, options)
-    @template = ['chefignore', '.gitignore', 'Gemfile', 'Berksfile', '.kitchen.yml', 'Guardfile', 'Strainerfile', '.rubocop.yml', 'chefspec', 'serverspec']
-    write_configs(@template, cookbook_name, options)
+    #init_service(cookbook_name, options)
+    write_configs(cookbook_name, options)
   end
 
-  def self.init_service(@tool, cookbook_name, options)
+  def self.init_service(cookbook_name, options)
+    @tool = ['chef', 'knife', 'git', 'berkshelf', 'kitchen', 'guard', 'chefspec', 'strainer', 'rubocop', 'foodcritic', 'serverspec', 'stove']
     puts "* Initializing #{tool}"
     path = File.join(options[:path], cookbook_name)
-    if @tool == "chef"
+    if tool == "chef"
       require 'chef/knife/cookbook_create'
       create_cookbook = Chef::Knife::CookbookCreate.new
       create_cookbook.name_args = [cookbook_name]
@@ -22,15 +21,15 @@ class Ohmeez
       create_cookbook.run
       %w{ metadata.rb recipes/default.rb }.each do |file|
         puts "\tRewriting #{file}"
-        contents = "# Encoding: utf-8\n#{File.read(File.join(path, file))}"
+        contents = "\# Encoding: utf-8\n#{File.read(File.join(path, file))}"
         File.open(File.join(path, file), 'w') { |f| f.write(contents) }
       end
     end
-    if @tool == "git"
+    if tool == "git"
       require 'git'
       Git.init( path, { repository: path } )
     end
-    if @tool == "berkshelf"
+    if tool == "berkshelf"
       require 'berkshelf'
       require 'berkshelf/base_generator'
       require 'berkshelf/init_generator'
@@ -42,22 +41,23 @@ class Ohmeez
         }
       ).invoke_all
     end
-    if @tool == "kitchen"
+    if tool == "kitchen"
       require 'kitchen'
       require 'kitchen/generator/init'
       Kitchen::Generator::Init.new([], {}, destination_root: path).invoke_all
     end
-    if @tool == "chefspec"
+    if tool == "chefspec"
       spec_path = File.join(path, 'spec')
       FileUtils.mkdir_p(spec_path)
     end
-    if @tool == "serverspec"
+    if tool == "serverspec"
       spec_path = File.join(path, 'test', 'integration', 'default', 'serverspec')
       FileUtils.mkdir_p(spec_path)
     end
   end
   
-  def self.write_configs(@template, cookbook_name, options)
+  def self.write_configs(cookbook_name, options)
+    @template = ['chefignore', '.gitignore', 'Gemfile', 'Berksfile', '.kitchen.yml', 'Guardfile', 'Strainerfile', '.rubocop.yml', 'chefspec', 'serverspec']
     path = File.join(options[:path], cookbook_name)
     @template.each do |template|
       @spec = ['spec_helper.rb', 'default_spec.rb']
@@ -68,7 +68,9 @@ class Ohmeez
         spec_path = File.join(path, 'spec')
         erb "serverspec/#{spec}.erb" > "#{spec_path}/#{spec}"
       end
-      erb "templates/#{template}.erb" > "#{path}/#{template}"
+      fname = File.dirname(__FILE__) + "/templates/#{template}.erb"
+      erb_template = ERB.new File.read(fname)
+      File.open(File.join(path, "#{template}"), 'w') { |f| f.write(erb_template) }
     end
   end
 end
