@@ -36,7 +36,7 @@ cookbook_name = ARGV.pop
 
 unless options[:help]
   if cookbook_name
-    ohmeez.init(cookbook_name, options)
+    Ohmeez.init(cookbook_name, options)
     puts "Cookbook #{cookbook_name} created successfully"
     puts 'Next steps...'
     puts "  $ cd #{File.join(options[:path], cookbook_name)}"

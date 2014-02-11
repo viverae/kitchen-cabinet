@@ -3,12 +3,12 @@ class Ohmeez
   require 'erb'
   def self.init(cookbook_name, options)
     @tool = ['chef', 'knife', 'git', 'berkshelf', 'kitchen', 'guard', 'chefspec', 'strainer', 'rubocop', 'foodcritic', 'serverspec', 'stove']
-    init_service(tool, cookbook_name, options)
+    init_service(@tool, cookbook_name, options)
     @template = ['chefignore', '.gitignore', 'Gemfile', 'Berksfile', '.kitchen.yml', 'Guardfile', 'Strainerfile', '.rubocop.yml', 'chefspec', 'serverspec']
-    write_configs(template, cookbook_name, options)
+    write_configs(@template, cookbook_name, options)
   end
 
-  def self.init_service(tool, cookbook_name, options)
+  def self.init_service(@tool, cookbook_name, options)
     puts "* Initializing #{tool}"
     path = File.join(options[:path], cookbook_name)
     if @tool == "chef"
@@ -57,7 +57,7 @@ class Ohmeez
     end
   end
   
-  def self.write_configs(template, cookbook_name, options)
+  def self.write_configs(@template, cookbook_name, options)
     path = File.join(options[:path], cookbook_name)
     @template.each do |template|
       @spec = ['spec_helper.rb', 'default_spec.rb']
