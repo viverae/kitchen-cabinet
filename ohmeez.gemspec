@@ -10,18 +10,18 @@ Gem::Specification.new do |s|
 EOF
   s.files = [
     'lib/ohmeez/ohmeez.rb',
-    'lib/ohmeez/templates/.gitignore.erb',
-    'lib/ohmeez/templates/.kitchen.yml.erb',
-    'lib/ohmeez/templates/.rubocop.yml.erb',
-    'lib/ohmeez/templates/Berksfile.erb',
-    'lib/ohmeez/templates/Gemfile.erb',
-    'lib/ohmeez/templates/Guardfile.erb',
-    'lib/ohmeez/templates/Strainerfile.erb',
-    'lib/ohmeez/templates/chefignore.erb',
-    'lib/ohmeez/serverspec/default_spec.rb.erb',
-    'lib/ohmeez/serverspec/spec_helper.rb.erb',
-    'lib/ohmeez/chefspec/default_spec.rb.erb',
-    'lib/ohmeez/chefspec/spec_helper.rb.erb'
+    'lib/ohmeez/templates/.gitignore.eruby',
+    'lib/ohmeez/templates/.kitchen.yml.eruby',
+    'lib/ohmeez/templates/.rubocop.yml.eruby',
+    'lib/ohmeez/templates/Berksfile.eruby',
+    'lib/ohmeez/templates/Gemfile.eruby',
+    'lib/ohmeez/templates/Guardfile.eruby',
+    'lib/ohmeez/templates/Strainerfile.eruby',
+    'lib/ohmeez/templates/chefignore.eruby',
+    'lib/ohmeez/serverspec/default_spec.rb.eruby',
+    'lib/ohmeez/serverspec/spec_helper.rb.eruby',
+    'lib/ohmeez/chefspec/default_spec.rb.eruby',
+    'lib/ohmeez/chefspec/spec_helper.rb.eruby'
   ]
   s.executables = [
     'ohmeez'

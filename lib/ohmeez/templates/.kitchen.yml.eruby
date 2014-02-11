@@ -21,7 +21,7 @@ platforms:
 suites:
 - name: default
   run_list:
-    - recipe[<%= #{cookbook_name}%>::default]
+    - recipe[<%= cookbook_name %>::default]
   attributes:
     or:
       pkg:

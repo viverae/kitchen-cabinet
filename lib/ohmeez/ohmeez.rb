@@ -63,31 +63,27 @@ class Ohmeez
     template = template
     @template = ['chefignore', '.gitignore', 'Gemfile', 'Berksfile', '.kitchen.yml', 'Guardfile', 'Strainerfile', '.rubocop.yml', 'chefspec', 'serverspec']
     path = File.join(options[:path], cookbook_name)
+    puts "this is the " + cookbook_name + " cookbook."
     @template.each do |template|
       @spec = ['spec_helper.rb', 'default_spec.rb']
       if template == "chefspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          FileUtils.touch("spec_path" + "#{spec}")
-          tname = File.read(File.realpath("lib/ohmeez/chefspec/#{spec}"))
-          File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(tname) }
+          tname = File.read(File.realpath("lib/ohmeez/chefspec/#{spec}.eruby"))
+          eruby = Erubis::Eruby.new(tname)
+          File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
         end
       elsif template == "serverspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          FileUtils.touch(spec_path + "#{spec}")
-          tname = File.read(File.realpath("lib/ohmeez/serverspec/#{spec}"))
-          File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(tname) }
+          tname = File.read(File.realpath("lib/ohmeez/serverspec/#{spec}.eruby"))
+          eruby = Erubis::Eruby.new(tname)
+          File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
         end
-      elsif template == ".kitchen.yml"
-        FileUtils.touch(path + "#{template}")
-        tname = ERB.new File.read(File.realpath("lib/ohmeez/templates/#{template}.erb"))
-        contents = tname.result
-        File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(contents) }
       else
-        FileUtils.touch(path + "#{template}")
-        tname = File.read(File.realpath("lib/ohmeez/templates/#{template}"))
-        File.open(File.join(path, "#{template}"), 'w') { |f| f.write(tname) }
+        tname = File.read(File.realpath("lib/ohmeez/templates/#{template}.eruby"))
+        eruby = Erubis::Eruby.new(tname)
+        File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
       end
     end
   end
