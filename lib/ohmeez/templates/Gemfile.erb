@@ -1,9 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf'
+gem 'berkshelf',  '~> 2.0.13'
+
+group :unit do
+  gem 'foodcritic', '~> 3.0'
+  gem 'rubocop',  '~> 0.18.0'
+  gem 'chefspec', '~> 3.2.0'
+end
 
 group :integration do
-  gem 'test-kitchen'
+  gem 'test-kitchen', '~> 1.1'
   gem 'kitchen-vagrant'
 end
 
@@ -13,13 +19,12 @@ end
 
 group :development do
   gem 'strainer', '~> 3.3.0'
-  gem 'rubocop', '~> 0.18'
-  gem 'foodcritic', '~> 3.0.0'
-  gem 'chefspec', '~> 3.2'
   gem 'serverspec', '~> 0.14.2'
   gem 'guard', '~> 1.8'
   gem 'guard-rubocop', '~> 0.2'
   gem 'guard-foodcritic', '~> 1.0'
   gem 'guard-kitchen', '~> 0.0'
   gem 'guard-rspec', '~> 3.0'
+  gem 'rb-fsevent', :require => false
+  gem 'rb-inotify', :require => false
 end

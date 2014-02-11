@@ -1,6 +1,6 @@
 class Ohmeez
   require 'fileutils'
-  require 'erb'
+  require 'erubis'
   def self.init(cookbook_name, options)
     init_service(cookbook_name, options)
     write_configs(cookbook_name, options)
@@ -69,25 +69,25 @@ class Ohmeez
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
           FileUtils.touch("spec_path" + "#{spec}")
-          tname = ERB.new File.new(File.realpath("lib/ohmeez/chefspec/#{spec}")).read, nil, "%"
-          contents = tname.result(binding)
-          #File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(contents.result()) }          
+          tname = File.read(File.realpath("lib/ohmeez/chefspec/#{spec}"))
+          File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(tname) }
         end
       elsif template == "serverspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
           FileUtils.touch(spec_path + "#{spec}")
-          tname = ERB.new File.new(File.realpath("lib/ohmeez/serverspec/#{spec}")).read, nil, "%"
-          contents = tname.result(binding)
+          tname = File.read(File.realpath("lib/ohmeez/serverspec/#{spec}"))
+          File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(tname) }
         end
       elsif template == ".kitchen.yml"
         FileUtils.touch(path + "#{template}")
-        tname = ERB.new File.new(File.realpath("lib/ohmeez/templates/#{template}.erb")).read, nil, "%"
-        contents = tname.result(binding)
+        tname = ERB.new File.read(File.realpath("lib/ohmeez/templates/#{template}.erb"))
+        contents = tname.result
+        File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(contents) }
       else
         FileUtils.touch(path + "#{template}")
-        tname = ERB.new File.new(File.realpath("lib/ohmeez/templates/#{template}")).read, nil, "%"
-        contents = tname.result(binding)
+        tname = File.read(File.realpath("lib/ohmeez/templates/#{template}"))
+        File.open(File.join(path, "#{template}"), 'w') { |f| f.write(tname) }
       end
     end
   end
