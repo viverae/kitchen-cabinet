@@ -1,5 +1,6 @@
 class Ohmeez
   require 'fileutils'
+  require 'erb'
   def self.init(cookbook_name, options)
     init_service(cookbook_name, options)
     write_configs(cookbook_name, options)
@@ -68,26 +69,25 @@ class Ohmeez
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
           FileUtils.touch("spec_path" + "#{spec}")
-          fname = File.open(File.realpath("lib/ohmeez/chefspec/#{spec}")) { |file_template|
-            contents = file_template.read
-            File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(file_template) }
-          }
+          tname = ERB.new File.new(File.realpath("lib/ohmeez/chefspec/#{spec}")).read, nil, "%"
+          contents = tname.result(binding)
+          #File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(contents.result()) }          
         end
       elsif template == "serverspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
           FileUtils.touch(spec_path + "#{spec}")
-          fname = File.open(File.realpath("lib/ohmeez/serverspec/#{spec}")) { |file_template|
-            contents = file_template.read
-            File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(file_template) }
-          }
-         end
+          tname = ERB.new File.new(File.realpath("lib/ohmeez/serverspec/#{spec}")).read, nil, "%"
+          contents = tname.result(binding)
+        end
+      elsif template == ".kitchen.yml"
+        FileUtils.touch(path + "#{template}")
+        tname = ERB.new File.new(File.realpath("lib/ohmeez/templates/#{template}.erb")).read, nil, "%"
+        contents = tname.result(binding)
       else
         FileUtils.touch(path + "#{template}")
-        fname = File.open(File.realpath("lib/ohmeez/templates/#{template}")) { |file_template|
-          contents = file_template.read
-          File.open(File.join(path, "#{template}"), 'w') { |f| f.write(file_template) }
-          }
+        tname = ERB.new File.new(File.realpath("lib/ohmeez/templates/#{template}")).read, nil, "%"
+        contents = tname.result(binding)
       end
     end
   end
