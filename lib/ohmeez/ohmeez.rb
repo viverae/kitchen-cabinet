@@ -69,7 +69,7 @@ class Ohmeez
       if template == "chefspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          tname = File.read(File.read(File.join(File.dirname(File.expand_path(__FILE__)), "chefspec/#{spec}.eruby"))
+          tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "chefspec/#{spec}.eruby"))
           eruby = Erubis::Eruby.new(tname)
           File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
         end
