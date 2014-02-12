@@ -17,7 +17,7 @@ EOF
   ]
   s.authors = ['Taylor Price']
   s.email   = 'tprice@onehealth.com'
-  s.license = 'apache2'
+  s.license = 'apachev2'
   s.require_paths = ['lib']
   s.add_runtime_dependency 'chef', '~> 11.8', '>= 11.8.0'
   s.add_runtime_dependency 'test-kitchen', '~> 1.1', '>= 1.1.1'
