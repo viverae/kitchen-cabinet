@@ -1,4 +1,4 @@
-class Ohmeez
+class Cabinet
   require 'fileutils'
   require 'erubis'
   def self.init(cookbook_name, options)

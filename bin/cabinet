@@ -4,12 +4,12 @@
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
 
 require 'optparse'
-require 'ohmeez/ohmeez'
+require 'kitchen-cabinet/cabinet'
 
 options = {}
 
 opt_parser = OptionParser.new do |opt|
-  opt.banner = 'Usage: ohmeez [options] <cookbook name>'
+  opt.banner = 'Usage: cabinet [options] <cookbook name>'
   opt.separator  ''
   opt.separator  'Options'
   opt.on('-o', '--cookbook-path PATH', 'The directory where the cookbook will be created') do |path|
@@ -36,7 +36,7 @@ cookbook_name = ARGV.pop
 
 unless options[:help]
   if cookbook_name
-    Ohmeez.init(cookbook_name, options)
+    Cabinet.init(cookbook_name, options)
     puts "Cookbook #{cookbook_name} created successfully"
     puts 'Next steps...'
     puts "  $ cd #{File.join(options[:path], cookbook_name)}"
