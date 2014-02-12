@@ -69,19 +69,19 @@ class Ohmeez
       if template == "chefspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          tname = File.read(File.realpath("lib/ohmeez/chefspec/#{spec}.eruby"))
+          tname = File.read("lib/ohmeez/chefspec/#{spec}.eruby")
           eruby = Erubis::Eruby.new(tname)
           File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
         end
       elsif template == "serverspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          tname = File.read(File.realpath("lib/ohmeez/serverspec/#{spec}.eruby"))
+          tname = File.read("lib/ohmeez/serverspec/#{spec}.eruby")
           eruby = Erubis::Eruby.new(tname)
           File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
         end
       else
-        tname = File.read(File.realpath("lib/ohmeez/templates/#{template}.eruby"))
+        tname = File.read("lib/ohmeez/templates/#{template}.eruby")
         eruby = Erubis::Eruby.new(tname)
         File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
       end
