@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.homepage = 'https://git.onehealth.com/it/kitchen-cabinet'
   s.summary = 'Initializes a chef cookbook repo with relevant tools'
   s.description = <<EOF
-`kitchen-cabinet` will create an opinionated chef cookbook skeleton complete with testing suite including:
-    berkshelf, chefspec, test kitchen, strainer, foodcritic, rubocop, serverspec, stove, and guard. This is a refactor of the meez plugin with some extra additions.
+`kitchen-cabinet` will create a chef cookbook skeleton complete with testing suite including:
+    berkshelf, chefspec, test kitchen, strainer, foodcritic, rubocop, serverspec, stove, and guard. It also creates a gemfile suitable for use in CI.
 
 EOF
   s.required_ruby_version = '>= 1.9.3'
