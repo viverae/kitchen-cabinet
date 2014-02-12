@@ -4,9 +4,47 @@
 About
 =====
 
-This gem was born from `meez` - the idea of using a gem to setup a cookbook development environment complete with tests was taken from `meez`. `kitchen-cabinet` is a complete rewrite of the code with some extra goodness added in.
+Inspiration for this gem was taken from `meez` - [Found here]{https://github.com/paulczar/meez}. It creates an opinionated cookbook complete with testing suites.
 
+Once `cabinet` has finished running, you will have a new cookbook complete with an initialized git repo, chefspec, serverspec, strainer, test-kitchen, guard (with notifications via inotify/fsevent/guard-terminal-notify), rubocop, foodcritic, berkshelf, and stove.
 
+It will automatically create a Gemfile for you with different groups set up for development, testing, etc:
+
+`````` ruby
+source 'https://rubygems.org'
+
+gem 'berkshelf',  '~> 2.0.13'
+
+group :unit do
+  gem 'foodcritic', '~> 3.0'
+  gem 'rubocop',  '~> 0.18.0'
+  gem 'chefspec', '~> 3.2.0'
+end
+
+group :integration do
+  gem 'test-kitchen', '~> 1.1'
+  gem 'kitchen-vagrant'
+end
+
+group :release do
+  gem 'stove', '~> 1.1.2'
+end
+
+group :development do
+  gem 'strainer', '~> 3.3.0'
+  gem 'serverspec', '~> 0.14.2'
+  gem 'guard', '~> 1.8'
+  gem 'guard-rubocop', '~> 0.2'
+  gem 'guard-foodcritic', '~> 1.0'
+  gem 'guard-kitchen', '~> 0.0'
+  gem 'guard-rspec', '~> 3.0'
+  gem 'rb-fsevent', :require => false
+  gem 'rb-inotify', :require => false
+  gem 'terminal-notifier-guard', :require => false
+end
+``````
+
+The goal of this project is to prevent any manual setup of the cookbook environment. We used to copy Gemfiles and other configurations from cookbook to cookbook, making changes as needed. That quickly gets messy as things get out of date! With `cabinet`, every project starts with the same templated base.
 
 Install
 =======
@@ -84,6 +122,15 @@ Using test (0.1.0) from metadata
 ``````
 
 And so on!
+
+Contributing
+-------------------
+1. Fork this repo!
+2. Submit a pull request!
+3. ???
+4. Profit!
+
+In an effort to make this easier to update/maintain I have made all of the config files into seperate .eruby files (for erubis). That way tool versions can be bumped easily and variables/templating can be added to those config files very easily.
 
 License and Authors
 -------------------
