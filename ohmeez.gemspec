@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{ohmeez}
-  s.version = '1.0.0.oh'
+  s.version = '1.0.1.oh'
   s.date = %q{2014-01-08}
   s.summary = 'Initializes a chef cookbook repo with relevant tools'
   s.description = <<EOF
