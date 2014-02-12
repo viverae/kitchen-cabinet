@@ -1,25 +1,23 @@
 ohmeez
 ----
-#Adapted from https://github.com/paulczar/meez?source=cc#
+#Adapted from https://github.com/paulczar/meez#
 About
 =====
 
-`Meez` is slang for `mise en place`
+This gem was born from `meez` - the idea of using a gem to setup a cookbook development environment complete with tests was taken from `meez`. `ohmeez` is a complete rewrite of the code with some extra goodness added in.
 
-`Mise en place` is a French phrase which means "putting in place", as in set up. It is used in professional kitchens to refer to organizing and arranging the ingredients (e.g., cuts of meat, relishes, sauces, par-cooked items, spices, freshly chopped vegetables, and other components) that a cook will require for the menu items that he or she expects to prepare during his/her shift.[1] The practice is also effective in home kitchens.
 
-`Meez` will create an opinionated chef cookbook skeleton complete with testing suite. 
 
 Install
 =======
 
-`gem install meez`
+`gem install ohmeez.x.x.x.oh.gem`
 
 Usage
 =====
 
 ```
-Usage: meez [options] <cookbook name>
+Usage: ohmeez [options] <cookbook name>
 
 Options
     -o, --cookbook-path USERNAME     The directory where the cookbook will be created
@@ -32,7 +30,7 @@ Options
 ### Example
 
 ```
-meez --cookbook-path /tmp --copyright Foo -I apachev2 -m foo@bah.com test
+ohmeez --cookbook-path /tmp --copyright Foo -I apachev2 -m foo@bah.com test
 * Initializing Cookbook
 ** Creating cookbook test
 ** Creating README for cookbook: test
@@ -237,29 +235,19 @@ kitchen              | SUCCESS!
 Strainer marked build as success
 ```
 
-Contributing
-------------
-
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
-
 License and Authors
 -------------------
 
 Authors:
 ========
 
-Paul Czarkowski - paul.czarkowski@rackspace.com
+Complete rewrite:
+ohmeez - Taylor Price - tprice@onehealth.com
 
 License:
 ========
 
-Copyright 2014 Paul Czarkowski,  Rackspace Inc.
+Copyright 2014 Taylor Price,  OneHealth Solutions, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
