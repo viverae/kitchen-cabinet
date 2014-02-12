@@ -125,10 +125,12 @@ And so on!
 
 Contributing
 -------------------
-1. Fork this repo!
-2. Submit a pull request!
-3. ???
-4. Profit!
+1. Fork this repo.
+2. Create a feature branch (like `add_feature_x`)
+3. Write your changes.
+4. Write tests for those changes.
+5. Run those tests and ensure they pass.
+6. Submit a pull request.
 
 In an effort to make this easier to update/maintain I have made all of the config files into seperate .eruby files (for erubis). That way tool versions can be bumped easily and variables/templating can be added to those config files very easily.
 
