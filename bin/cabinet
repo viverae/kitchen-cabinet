@@ -37,39 +37,38 @@ end
 opt_parser.parse!
 
 cookbook_name = ARGV.pop
-unless options[:help]
-  if options[:update]
-    if options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
-      path = File.join(options[:path], cookbook_name)
-      if !(File.exists?(path))
-        puts ''
-        puts 'You need to create the cookbook first!'
-        puts ''
-        puts opt_parser
-        exit
-      elsif cookbook_name
-        puts "Updating #{cookbook_name}..."
-        puts 'Gemfile, Chefignore, and Guardfile are up to date.'
-        Cabinet.update_cookbook(cookbook_name, options)
-        exit
-      end
-    else
-      puts ''
-      puts 'Define a path with `-o` and a cookbook name!'
-      puts ''
-      puts opt_parser
-      exit
-    end
-  elsif cookbook_name
-    Cabinet.init(cookbook_name, options)
-    puts "Cookbook #{cookbook_name} created successfully"
-    puts 'Next steps...'
-    puts "  $ cd #{File.join(options[:path], cookbook_name)}"
-    puts '  $ bundle install'
-    puts '  $ bundle exec berks install'
-    puts '  $ bundle exec strainer test'
-    exit
-  end
+
+def opt_error(message)
+  puts ''
+  puts 'You need to create the cookbook first!'
+  puts ''
+  puts opt_parser
+  exit
 end
 
-puts opt_parser
+path = File.join(options[:path], cookbook_name)
+
+puts opt_parser if options[:help]
+if options[:update]
+  opt_error("You need to create #{cookbook_name} first!") unless File.exists?(path)
+  unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
+    opt_error('Make sure you specify -o and a cookbook name!')
+  end
+  if cookbook_name
+    puts "Updating #{cookbook_name}..."
+    puts 'Gemfile, Chefignore, and Guardfile are up to date.'
+    Cabinet.update_cookbook(cookbook_name, options, path)
+    exit
+  else
+    opt_error('Define a path with `-o` and a cookbook name!')
+  end
+elsif options[:update] = false && cookbook_name
+  Cabinet.init(cookbook_name, options, path)
+  puts "Cookbook #{cookbook_name} created successfully"
+  puts 'Next steps...'
+  puts "  $ cd #{File.join(options[:path], cookbook_name)}"
+  puts '  $ bundle install'
+  puts '  $ bundle exec berks install'
+  puts '  $ bundle exec strainer test'
+  exit
+end
