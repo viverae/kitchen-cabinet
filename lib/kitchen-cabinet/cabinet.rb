@@ -2,12 +2,13 @@ class Cabinet
   require 'fileutils'
   require 'erubis'
   def self.init(cookbook_name, options)
+    init_base_service(cookbook_name, options)
     init_service(cookbook_name, options)
     write_configs(cookbook_name, options)
+    write_spec_configs(cookbook_name, options)
   end
-
-  def self.init_service(cookbook_name, options)
-    @tool = %w(chef knife git berkshelf kitchen guard chefspec strainer rubocop foodcritic serverspec stove)
+  def self.init_base_service(cookbook_name, options)
+    @tool = %w(chef knife git berkshelf kitchen)
     @tool.each do |tool|
       puts "* Initializing #{tool}"
       path = File.join(options[:path], cookbook_name)
@@ -45,6 +46,13 @@ class Cabinet
         require 'kitchen/generator/init'
         Kitchen::Generator::Init.new([], {}, destination_root: path).invoke_all
       end
+    end
+  end
+  def self.init_service(cookbook_name, options)
+    @tool = %w(guard chefspec strainer rubocop foodcritic serverspec stove)
+    @tool.each do |tool|
+      puts "* Initializing #{tool}"
+      path = File.join(options[:path], cookbook_name)
       if tool == 'chefspec'
         spec_path = File.join(path, 'spec')
         FileUtils.mkdir_p(spec_path)
@@ -55,11 +63,20 @@ class Cabinet
       end
     end
   end
-
   def self.write_configs(cookbook_name, options)
-    @template = %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Strainerfile .rubocop.yml chefspec serverspec)
+    @template = %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Strainerfile .rubocop.yml)
     path = File.join(options[:path], cookbook_name)
     puts 'this is the ' + cookbook_name + ' cookbook.'
+    @template.each do |template|
+      tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/#{template}.eruby"))
+      eruby = Erubis::Eruby.new(tname)
+      File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
+    end
+  end
+
+  def self.write_spec_configs(cookbook_name, options)
+    @template = %w(chefspec serverspec)
+    path = File.join(options[:path], cookbook_name)
     @template.each do |template|
       @spec = %w(spec_helper.rb default_spec.rb)
       if template == 'chefspec'
@@ -76,10 +93,6 @@ class Cabinet
           eruby = Erubis::Eruby.new(tname)
           File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
         end
-      else
-        tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/#{template}.eruby"))
-        eruby = Erubis::Eruby.new(tname)
-        File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
       end
     end
   end
