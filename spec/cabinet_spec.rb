@@ -1,7 +1,6 @@
 # cabinet_spec.rb
 require File.expand_path('../../lib/kitchen-cabinet/cabinet.rb', __FILE__)
 describe Cabinet do
-  cookbook_name = 'rspec-test-cookbook'
   options = {}
   options[:path] = 'test-path'
   options[:copywrite] = 'test-copywrite'
