@@ -45,10 +45,12 @@ def opt_error(message)
   puts opt_parser
   exit
 end
-
-path = File.join(options[:path], cookbook_name)
-
+if ARGV.empty?
+  puts opt_parser
+  exit
+end
 puts opt_parser if options[:help]
+path = File.join(options[:path], cookbook_name)
 if options[:update]
   opt_error("You need to create #{cookbook_name} first!") unless File.exists?(path)
   unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
