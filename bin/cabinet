@@ -36,21 +36,28 @@ end
 
 opt_parser.parse!
 
-cookbook_name = ARGV.pop
-
-def opt_error(message)
-  puts ''
-  puts 'You need to create the cookbook first!'
-  puts ''
-  puts opt_parser
-  exit
-end
 if ARGV.empty?
   puts opt_parser
   exit
 end
+
+cookbook_name = ARGV.pop
+
+def opt_error(message)
+  puts ''
+  puts message
+  puts ''
+  puts opt_parser
+  exit
+end
+
 puts opt_parser if options[:help]
-path = File.join(options[:path], cookbook_name)
+if options[:path].respond_to?(:to_str)
+  path = File.join(options[:path], cookbook_name)
+else
+  puts opt_error('Specify a path!')
+end
+
 if options[:update]
   opt_error("You need to create #{cookbook_name} first!") unless File.exists?(path)
   unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
@@ -64,7 +71,7 @@ if options[:update]
   else
     opt_error('Define a path with `-o` and a cookbook name!')
   end
-elsif options[:update] = false && cookbook_name
+elsif cookbook_name
   Cabinet.init(cookbook_name, options, path)
   puts "Cookbook #{cookbook_name} created successfully"
   puts 'Next steps...'
