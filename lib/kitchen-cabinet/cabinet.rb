@@ -69,14 +69,14 @@ class Cabinet
       if template == "chefspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "chefspec/#{spec}.eruby"))
+          tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/chefspec/#{spec}.eruby"))
           eruby = Erubis::Eruby.new(tname)
           File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
         end
       elsif template == "serverspec"
         @spec.each do |spec|
           spec_path = File.join(path, 'spec')
-          tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "serverspec/#{spec}.eruby"))
+          tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/serverspec/#{spec}.eruby"))
           eruby = Erubis::Eruby.new(tname)
           File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
         end
@@ -85,6 +85,16 @@ class Cabinet
         eruby = Erubis::Eruby.new(tname)
         File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
       end
+    end
+  end
+  
+  def self.update_cookbook(cookbook_name, options)
+    @template = ['chefignore', 'Gemfile', 'Guardfile', 'Strainerfile', '.rubocop.yml']
+    path = File.join(options[:path], cookbook_name)
+    @template.each do |template|
+      tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/#{template}.eruby"))
+      eruby = Erubis::Eruby.new(tname)
+      File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name=>cookbook_name)) }
     end
   end
 end

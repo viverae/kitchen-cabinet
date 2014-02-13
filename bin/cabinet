@@ -5,6 +5,7 @@ $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib
 
 require 'optparse'
 require 'kitchen-cabinet/cabinet'
+require 'fileutils'
 
 options = {}
 
@@ -24,6 +25,9 @@ opt_parser = OptionParser.new do |opt|
   opt.on('-m', '--email EMAIL', 'The  email  address  for the individual who maintains the cookbook.') do |email|
     options[:email] = email
   end
+  opt.on('-u', '--update', "Update the Gemfile, Chefignore, Guardfile (and other config files that don't change much) of an existing project") do
+    options[:update] = true
+  end
   opt.on('-h', '--help', 'help') do
     options[:help] = true
     puts opt_parser
@@ -34,7 +38,30 @@ opt_parser.parse!
 
 cookbook_name = ARGV.pop
 
-unless options[:help]
+if options[:update]
+  if options[:path].respond_to?(:to_str) and cookbook_name.is_a? String
+    path = File.join(options[:path], cookbook_name)
+    if !(File.exists?(path))
+      puts ""
+      puts "You need to create the cookbook first!"
+      puts ""
+      puts opt_parser
+      exit
+    elsif cookbook_name
+      puts "Updating #{cookbook_name}..."
+      puts "Gemfile, Chefignore, and Guardfile are up to date."
+      Cabinet.update_cookbook(cookbook_name, options)
+      exit
+    end
+  else
+    puts ""
+    puts "Define a path with `-o` and a cookbook name!"
+    puts ""
+    puts opt_parser
+    exit
+  end
+
+elsif options[:help]
   if cookbook_name
     Cabinet.init(cookbook_name, options)
     puts "Cookbook #{cookbook_name} created successfully"
@@ -43,8 +70,6 @@ unless options[:help]
     puts '  $ bundle install'
     puts '  $ bundle exec berks install'
     puts '  $ bundle exec strainer test'
-  else
-    puts 'Need to specify a cookbook'
-    puts opt_parser
+    exit
   end
 end

@@ -1,4 +1,4 @@
-.vagrant
+.vagrant/
 Berksfile.lock
 *~
 *#
@@ -10,12 +10,11 @@ Berksfile.lock
 
 # Bundler
 Gemfile.lock
-bin/*
 .bundle/*
+
+# test-kitchen
 .kitchen/
 .kitchen.local.yml
-# not exactly sure why this is here
-shared
-.idea/
+
+# OS Files
 .DS_Store
-.coverage
