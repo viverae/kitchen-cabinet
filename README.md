@@ -1,10 +1,10 @@
-##kitchen-cabinet##
+## kitchen-cabinet
 ----
 
 About
 =====
 
-Inspiration for this gem was taken from `meez` - [Found here]{https://github.com/paulczar/meez}. It creates an opinionated cookbook complete with testing suites.
+Inspiration for this gem was taken from [meez](https://github.com/paulczar/meez). It creates an opinionated cookbook complete with testing suites.
 
 Once `cabinet` has finished running, you will have a new cookbook complete with an initialized git repo, chefspec, serverspec, strainer, test-kitchen, guard (with notifications via inotify/fsevent/guard-terminal-notify), rubocop, foodcritic, berkshelf, and stove.
 
