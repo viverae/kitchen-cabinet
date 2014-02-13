@@ -1,2 +1,15 @@
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+vendor
+
+# Bundler
 Gemfile.lock
+bin/*
+.bundle/*
+
+.idea/
 .DS_Store
