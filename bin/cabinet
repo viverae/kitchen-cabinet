@@ -43,7 +43,7 @@ end
 
 cookbook_name = ARGV.pop
 
-def opt_error(message)
+def opt_error(message, opt_parser)
   puts ''
   puts message
   puts ''
@@ -55,13 +55,13 @@ puts opt_parser if options[:help]
 if options[:path].respond_to?(:to_str)
   path = File.join(options[:path], cookbook_name)
 else
-  puts opt_error('Specify a path!')
+  puts opt_error('Specify a path!', opt_parser)
 end
 
 if options[:update]
   opt_error("You need to create #{cookbook_name} first!") unless File.exists?(path)
   unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
-    opt_error('Make sure you specify -o and a cookbook name!')
+    opt_error('Make sure you specify -o and a cookbook name!', opt_parser)
   end
   if cookbook_name
     puts "Updating #{cookbook_name}..."
@@ -69,7 +69,7 @@ if options[:update]
     Cabinet.update_cookbook(cookbook_name, options, path)
     exit
   else
-    opt_error('Define a path with `-o` and a cookbook name!')
+    opt_error('Define a path with `-o` and a cookbook name!', opt_parser)
   end
 elsif cookbook_name
   Cabinet.init(cookbook_name, options, path)
