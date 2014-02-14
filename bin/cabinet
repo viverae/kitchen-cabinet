@@ -47,7 +47,7 @@ if options[:path].respond_to?(:to_str)
 elsif cookbook_name == 'update'
   require 'kitchen-cabinet/update'
   path = Dir.getwd
-  metadata = (path, 'metadata.rb'))
+  metadata = File.join(path, 'metadata.rb')
   puts path
   puts metadata
   if File.exists?(metadata)
