@@ -26,7 +26,7 @@ opt_parser = OptionParser.new do |opt|
   opt.on('-m', '--email EMAIL', 'The  email  address  for the individual who maintains the cookbook.') do |email|
     options[:email] = email
   end
-  opt.on('-u', '--update', "Update the Gemfile, Chefignore, Guardfile (and other config files that don't change much) of an existing project") do
+  opt.on('-u', '--update', 'Update the Gemfile, Chefignore, Guardfile, rubocop.yml, and the Strainerfile.') do
     options[:update] = true
   end
   opt.on('-h', '--help', 'help') do
@@ -42,11 +42,16 @@ Error.opt_error('Please specify some options.', opt_parser) if ARGV.empty?
 
 cookbook_name = ARGV.pop
 
+
 if options[:path].respond_to?(:to_str)
   path = File.join(options[:path], cookbook_name)
-elsif cookbook_name == 'update'
-  require 'kitchen-cabinet/update'
+else
   path = Dir.getwd
+end
+
+if cookbook_name == 'update'
+  require 'kitchen-cabinet/update'
+  # path = Dir.getwd
   metadata = File.join(path, 'metadata.rb')
   puts path
   puts metadata
@@ -55,7 +60,7 @@ elsif cookbook_name == 'update'
     Update.update_cookbook(cookbook_name, options, path)
     exit
   else
-    puts Error.opt_error('This should be run from within the cookbook directory!', opt_parser)
+    puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)
   end
 else
   puts Error.opt_error('Specify a path!', opt_parser)
