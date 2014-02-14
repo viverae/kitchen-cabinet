@@ -6,8 +6,8 @@
 class Cabinet
   require 'fileutils'
   require 'erubis'
-  def self.init(cookbook_name, options, cookbook_path)
-    init_chef(cookbook_name, options, cookbook_path)
+  def self.init(cookbook_name, options, path, cookbook_path)
+    init_chef(cookbook_name, options, path, cookbook_path)
     init_git(cookbook_name, options, cookbook_path)
     init_berkshelf(cookbook_name, options, cookbook_path)
     init_kitchen(cookbook_name, options, cookbook_path)
@@ -15,7 +15,7 @@ class Cabinet
     write_configs(cookbook_name, options, cookbook_path)
   end
 
-  def self.init_chef(cookbook_name, options, cookbook_path)
+  def self.init_chef(cookbook_name, options, path, cookbook_path)
     tool = 'chef'
     puts "* Initializing #{tool}"
     require 'chef/knife/cookbook_create'
