@@ -1,5 +1,5 @@
 ## v1.1.1:
 
 * Refactored code
-* added -u option to update cookbooks
+* added -u option to update cookbooks[beta]
 * Initial public release
