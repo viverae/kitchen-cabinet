@@ -1,8 +1,9 @@
-## kitchen-cabinet
-----
+kitchen-cabinet
+===============
+[![Build Status](https://travis-ci.org/onehealth/kitchen-cabinet.png)](https://travis-ci.org/onehealth/kitchen-cabinet)
 
 About
-=====
+-----
 
 Inspiration for this gem was taken from [meez](https://github.com/paulczar/meez). It creates an opinionated cookbook complete with testing suites.
 
