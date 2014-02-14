@@ -1,6 +1,6 @@
 kitchen-cabinet
 ===============
-[![Build Status](https://travis-ci.org/onehealth/kitchen-cabinet.png)](https://travis-ci.org/onehealth/kitchen-cabinet)
+[![Build Status](https://travis-ci.org/onehealth/kitchen-cabinet.png)](https://travis-ci.org/onehealth/kitchen-cabinet)[![Dependency Status](https://gemnasium.com/onehealth/kitchen-cabinet.png)](https://gemnasium.com/onehealth/kitchen-cabinet)
 
 About
 -----
