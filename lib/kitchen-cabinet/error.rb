@@ -4,7 +4,7 @@
 # The error class responds with a helpful message whenever you do something
 # that breaks kitchen-cabinet.
 class Error
-  def opt_error(message, opt_parser)
+  def self.opt_error(message, opt_parser)
     puts ''
     puts message
     puts ''
