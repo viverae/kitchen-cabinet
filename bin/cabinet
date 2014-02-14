@@ -49,11 +49,11 @@ else
   path = Dir.getwd
   cookbook_path = File.join(path, cookbook_name)
 end
-
+  cookbook_path = Dir.getwd
 if cookbook_name == 'update'
   require 'kitchen-cabinet/update'
   # path = Dir.getwd
-  metadata = File.join(path, 'metadata.rb')
+  metadata = File.join(cookbook_path, 'metadata.rb')
   puts path
   puts metadata
   if File.exists?(metadata)
@@ -66,7 +66,7 @@ if cookbook_name == 'update'
 end
 
 if options[:update]
-  Error.opt_error('You need to create the cookbook first!', opt_parser) unless File.exists?(path)
+  Error.opt_error('You need to create the cookbook first!', opt_parser) unless File.exists?(cookbook_path)
   unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
     Error.opt_error('Make sure you specify -o and a cookbook name!', opt_parser)
   end
@@ -78,10 +78,10 @@ if options[:update]
     Error.opt_error('Define a path with `-o` and a cookbook name!', opt_parser)
   end
 elsif cookbook_name
-  Cabinet.init(cookbook_name, options, path, cookbook_path)
+  Cabinet.init(cookbook_name, options, cookbook_path)
   puts "Cookbook #{cookbook_name} created successfully"
   puts 'Next steps...'
-  puts "  $ cd #{File.join(options[:path], cookbook_name)}"
+  puts "  $ cd #{cookbook_path}"
   puts '  $ bundle install'
   puts '  $ bundle exec berks install'
   puts '  $ bundle exec strainer test'

@@ -6,22 +6,22 @@
 class Cabinet
   require 'fileutils'
   require 'erubis'
-  def self.init(cookbook_name, options, path, cookbook_path)
-    init_chef(cookbook_name, options, path, cookbook_path)
+  def self.init(cookbook_name, options, cookbook_path)
+    init_chef(cookbook_name, options, cookbook_path)
     init_git(cookbook_name, options, cookbook_path)
-    init_berkshelf(cookbook_name, options, cookbook_path)
+    init_berkshelf(cookbook_name, options,cookbook_path)
     init_kitchen(cookbook_name, options, cookbook_path)
     init_spec(cookbook_name, options, cookbook_path)
     write_configs(cookbook_name, options, cookbook_path)
   end
 
-  def self.init_chef(cookbook_name, options, path, cookbook_path)
+  def self.init_chef(cookbook_name, options, cookbook_path)
     tool = 'chef'
     puts "* Initializing #{tool}"
     require 'chef/knife/cookbook_create'
     create_cookbook = Chef::Knife::CookbookCreate.new
     create_cookbook.name_args = [cookbook_name]
-    create_cookbook.config[:cookbook_path]      = options[:path] || cookbook_path
+    create_cookbook.config[:path]      = options[:path] || cookbook_path
     create_cookbook.config[:cookbook_copyright] = options[:copyright] # || 'YOUR_COMPANY_NAME'
     create_cookbook.config[:cookbook_license]   = options[:license]   # || 'YOUR_EMAIL'
     create_cookbook.config[:cookbook_email]     = options[:email]     # || 'none'
@@ -37,7 +37,7 @@ class Cabinet
     tool = 'git'
     puts "* Initializing #{tool}"
     require 'git'
-    Git.init(path, repository: cookbook_path)
+    Git.init(cookbook_path, repository: cookbook_path)
   end
 
   def self.init_berkshelf(cookbook_name, options, cookbook_path)
@@ -65,7 +65,7 @@ class Cabinet
     require 'kitchen-cabinet/spec'
     @tool = %w(chefspec serverspec)
     @tool.each do |tool|
-      Spec.install_specs(tool, cookbook_path, cookbook_name)
+      Spec.install_specs(tool, path, cookbook_name)
     end
   end
 
