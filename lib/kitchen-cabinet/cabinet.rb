@@ -74,7 +74,7 @@ class Cabinet
     puts 'this is the ' + cookbook_name + ' cookbook.'
     require 'kitchen-cabinet/config'
     @template.each do |template|
-      Config.write_config(cookbook_name, options, path, template)
+      Initconfig.write_config(cookbook_name, options, path, template)
     end
   end
 end

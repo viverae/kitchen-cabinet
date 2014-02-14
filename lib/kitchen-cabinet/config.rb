@@ -1,5 +1,5 @@
 # Writes configs for cabinet and update.
-class Config
+class Initconfig
   def self.write_config(cookbook_name, options, path, template)
     tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/#{template}.eruby"))
     eruby = Erubis::Eruby.new(tname)
