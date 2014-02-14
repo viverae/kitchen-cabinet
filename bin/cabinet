@@ -61,6 +61,8 @@ if cookbook_name == 'update'
   else
     puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)
   end
+elsif cookbook_name == nil
+  cookbook_name = File.basename(File.expand_path(File.dirname(__FILE__)))
 end
 
 if options[:update]
