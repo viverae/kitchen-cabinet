@@ -11,8 +11,7 @@ class Cabinet
     init_git(cookbook_name, options, path)
     init_berkshelf(cookbook_name, options, path)
     init_kitchen(cookbook_name, options, path)
-    init_chefspec(cookbook_name, options, path)
-    init_serverspec(cookbook_name, options, path)
+    init_spec(cookbook_name, options, path)
     write_configs(cookbook_name, options, path)
   end
 
@@ -62,46 +61,17 @@ class Cabinet
     Kitchen::Generator::Init.new([], {}, destination_root: path).invoke_all
   end
 
-  def self.init_chefspec(cookbook_name, options, path)
-    tool = 'chefspec'
-    puts "* Initializing #{tool}"
-    spec_path = File.join(path, 'spec')
-    FileUtils.mkdir_p(spec_path)
-    @spec = %w(spec_helper.rb default_spec.rb)
-    @spec.each do |spec|
-      spec_path = File.join(path, 'spec')
-      tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/chefspec/#{spec}.eruby"))
-      eruby = Erubis::Eruby.new(tname)
-      File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
-    end
-  end
-
-  def self.init_serverspec(cookbook_name, options, path)
-    tool = 'serverspec'
-    puts "* Initializing #{tool}"
-    spec_path = File.join(path, 'test', 'integration', 'default', 'serverspec')
-    FileUtils.mkdir_p(spec_path)
-    @spec = %w(spec_helper.rb default_spec.rb)
-    @spec.each do |spec|
-      spec_path = File.join(path, 'spec')
-      tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/serverspec/#{spec}.eruby"))
-      eruby = Erubis::Eruby.new(tname)
-      File.open(File.join(spec_path, "#{spec}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
+  def self.init_spec(cookbook_name, options, path)
+    require 'kitchen-cabinet/spec'
+    @tool = %w(chefspec serverspec)
+    @tool.each do |tool|
+      Spec.install_specs(tool, path, cookbook_name)
     end
   end
 
   def self.write_configs(cookbook_name, options, path)
     @template = %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Strainerfile .rubocop.yml)
     puts 'this is the ' + cookbook_name + ' cookbook.'
-    @template.each do |template|
-      tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/#{template}.eruby"))
-      eruby = Erubis::Eruby.new(tname)
-      File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
-    end
-  end
-
-  def self.update_cookbook(cookbook_name, options, path)
-    @template = %w(chefignore Gemfile Guardfile Strainerfile .rubocop.yml)
     @template.each do |template|
       tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/#{template}.eruby"))
       eruby = Erubis::Eruby.new(tname)
