@@ -7,7 +7,7 @@ About
 
 Inspiration for this gem was taken from [meez](https://github.com/paulczar/meez). It creates an opinionated cookbook complete with testing suites.
 
-Once `cabinet` has finished running, you will have a new cookbook complete with an initialized git repo, chefspec, serverspec, strainer, test-kitchen, guard (with notifications via inotify/fsevent/guard-terminal-notify), rubocop, foodcritic, berkshelf, and stove.
+Once `cabinet` has finished running, you will have a new cookbook complete with an initialized git repo, chefspec, serverspec, strainer, test-kitchen, guard (with notifications via inotify/fsevent/terminal-notifier), rubocop, foodcritic, berkshelf, and stove.
 
 It will automatically create a Gemfile for you with different groups set up for development, testing, etc:
 
