@@ -5,6 +5,7 @@ $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib
 
 require 'optparse'
 require 'kitchen-cabinet/cabinet'
+require 'kitchen-cabinet/error'
 require 'fileutils'
 
 options = {}
@@ -37,39 +38,29 @@ end
 
 opt_parser.parse!
 
-if ARGV.empty?
-  puts opt_parser
-  exit
-end
+Error.opt_error('Please specify some options.', opt_parser) if ARGV.empty?
 
 cookbook_name = ARGV.pop
-
-def opt_error(message, opt_parser)
-  puts ''
-  puts message
-  puts ''
-  puts opt_parser
-  exit
-end
 
 if options[:path].respond_to?(:to_str)
   path = File.join(options[:path], cookbook_name)
 else
-  puts opt_error('Specify a path!', opt_parser)
+  puts Error.opt_error('Specify a path!', opt_parser)
 end
 
 if options[:update]
-  opt_error("You need to create #{cookbook_name} first!") unless File.exists?(path)
+  Error.opt_error("You need to create #{cookbook_name} first!") unless File.exists?(path)
   unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
-    opt_error('Make sure you specify -o and a cookbook name!', opt_parser)
+    Error.opt_error('Make sure you specify -o and a cookbook name!', opt_parser)
   end
   if cookbook_name
+    require 'kitchen-cabinet/update'
     puts "Updating #{cookbook_name}..."
     puts 'Gemfile, Chefignore, and Guardfile are up to date.'
-    Cabinet.update_cookbook(cookbook_name, options, path)
+    Update.update_cookbook(cookbook_name, options, path)
     exit
   else
-    opt_error('Define a path with `-o` and a cookbook name!', opt_parser)
+    Error.opt_error('Define a path with `-o` and a cookbook name!', opt_parser)
   end
 elsif cookbook_name
   Cabinet.init(cookbook_name, options, path)
