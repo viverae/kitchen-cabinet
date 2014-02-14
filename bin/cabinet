@@ -49,7 +49,7 @@ else
 end
 
 if options[:update]
-  Error.opt_error("You need to create #{cookbook_name} first!") unless File.exists?(path)
+  Error.opt_error('You need to create the cookbook first!', opt_parser) unless File.exists?(path)
   unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
     Error.opt_error('Make sure you specify -o and a cookbook name!', opt_parser)
   end

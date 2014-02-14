@@ -72,10 +72,9 @@ class Cabinet
   def self.write_configs(cookbook_name, options, path)
     @template = %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Strainerfile .rubocop.yml)
     puts 'this is the ' + cookbook_name + ' cookbook.'
+    require 'kitchen-cabinet/config'
     @template.each do |template|
-      tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/#{template}.eruby"))
-      eruby = Erubis::Eruby.new(tname)
-      File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
+      Initconfig.write_config(cookbook_name, options, path, template)
     end
   end
 end
