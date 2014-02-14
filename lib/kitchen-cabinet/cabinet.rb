@@ -99,13 +99,4 @@ class Cabinet
       File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
     end
   end
-
-  def self.update_cookbook(cookbook_name, options, path)
-    @template = %w(chefignore Gemfile Guardfile Strainerfile .rubocop.yml)
-    @template.each do |template|
-      tname = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "templates/#{template}.eruby"))
-      eruby = Erubis::Eruby.new(tname)
-      File.open(File.join(path, "#{template}"), 'w') { |f| f.write(eruby.result(:cookbook_name => cookbook_name)) }
-    end
-  end
 end
