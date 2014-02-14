@@ -6,8 +6,10 @@ class Update
   def self.update_cookbook(cookbook_name, options, path)
     @template = %w(chefignore Gemfile Guardfile Strainerfile .rubocop.yml)
     require 'kitchen-cabinet/config'
+    puts "Updating #{cookbook_name}..."
     @template.each do |template|
       Initconfig.write_config(cookbook_name, options, path, template)
+      puts "#{template} is up to date!"
     end
   end
 end
