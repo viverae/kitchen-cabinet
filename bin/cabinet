@@ -44,8 +44,10 @@ cookbook_name = ARGV.pop
 
 if options[:path].respond_to?(:to_str)
   path = File.join(options[:path], cookbook_name)
+  cookbook_path = path
 else
   path = Dir.getwd
+  cookbook_path = File.join(path, cookbook_name)
 end
 
 if cookbook_name == 'update'
@@ -56,13 +58,11 @@ if cookbook_name == 'update'
   puts metadata
   if File.exists?(metadata)
     cookbook_name = File.basename(File.expand_path(File.dirname(__FILE__)))
-    Update.update_cookbook(cookbook_name, options, path)
+    Update.update_cookbook(cookbook_name, options, cookbook_path)
     exit
   else
     puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)
   end
-elsif cookbook_name == nil
-  cookbook_name = File.basename(File.expand_path(File.dirname(__FILE__)))
 end
 
 if options[:update]
@@ -72,13 +72,13 @@ if options[:update]
   end
   if cookbook_name
     require 'kitchen-cabinet/update'
-    Update.update_cookbook(cookbook_name, options, path)
+    Update.update_cookbook(cookbook_name, options, cookbook_path)
     exit
   else
     Error.opt_error('Define a path with `-o` and a cookbook name!', opt_parser)
   end
 elsif cookbook_name
-  Cabinet.init(cookbook_name, options, path)
+  Cabinet.init(cookbook_name, options, cookbook_path)
   puts "Cookbook #{cookbook_name} created successfully"
   puts 'Next steps...'
   puts "  $ cd #{File.join(options[:path], cookbook_name)}"
