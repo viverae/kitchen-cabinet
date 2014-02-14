@@ -1,6 +1,6 @@
 kitchen-cabinet
 ===============
-[![Build Status](https://travis-ci.org/onehealth/kitchen-cabinet.png)](https://travis-ci.org/onehealth/kitchen-cabinet)[![Dependency Status](https://gemnasium.com/onehealth/kitchen-cabinet.png)](https://gemnasium.com/onehealth/kitchen-cabinet)
+[![Build Status](https://travis-ci.org/onehealth/kitchen-cabinet.png)](https://travis-ci.org/onehealth/kitchen-cabinet) [![Dependency Status](https://gemnasium.com/onehealth/kitchen-cabinet.png)](https://gemnasium.com/onehealth/kitchen-cabinet) [![Code Climate](https://codeclimate.com/github/onehealth/kitchen-cabinet.png)](https://codeclimate.com/github/onehealth/kitchen-cabinet) [![Gem Version](https://badge.fury.io/rb/kitchen-cabinet.png)](http://badge.fury.io/rb/kitchen-cabinet)
 
 About
 -----
