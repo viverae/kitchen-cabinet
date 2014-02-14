@@ -29,7 +29,7 @@ suites:
           or: "http://mirrors.onehealth.com/or"
           source: "http://mirrors.onehealth.com/ubuntu"
       contact:
-        email: <%= Etc.getpwuid(Process.uid).name %>@onehealth.com
+        email: foobar@example.com
       environment: "test"
       cluster: "unknown"
       realm:   "unknown"
