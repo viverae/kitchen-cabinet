@@ -30,6 +30,7 @@ tmtags
 .project
 .settings
 mkmf.log
+.idea/*
 
 ## COMPILED ##
 ##############
@@ -56,6 +57,7 @@ Procfile
 .kitchen.yml
 .kitchen/*
 .rubocop.yml
+.coverage/*
 
 # SCM #
 #######
