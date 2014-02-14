@@ -42,7 +42,6 @@ Error.opt_error('Please specify some options.', opt_parser) if ARGV.empty?
 
 cookbook_name = ARGV.pop
 
-
 if options[:path].respond_to?(:to_str)
   path = File.join(options[:path], cookbook_name)
 else
@@ -62,8 +61,6 @@ if cookbook_name == 'update'
   else
     puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)
   end
-else
-  puts Error.opt_error('Specify a path!', opt_parser)
 end
 
 if options[:update]
