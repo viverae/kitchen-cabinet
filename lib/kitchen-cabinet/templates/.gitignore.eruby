@@ -7,6 +7,12 @@ Berksfile.lock
 .*.sw[a-z]
 *.un~
 /cookbooks
+.coverage
+
+# JetBrains
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dataSources.ids
 
 # Bundler
 Gemfile.lock
