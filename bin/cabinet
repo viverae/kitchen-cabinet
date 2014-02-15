@@ -46,10 +46,13 @@ if options[:path].respond_to?(:to_str)
   path = File.join(options[:path], cookbook_name)
   cookbook_path = path
 else
+  options[:path] = Dir.getwd
+  puts options[:path] + ' this is the expected path'
   path = Dir.getwd
   cookbook_path = File.join(path, cookbook_name)
+  puts cookbook_path + ' this is the cookbook_path'
 end
-  cookbook_path = Dir.getwd
+
 if cookbook_name == 'update'
   require 'kitchen-cabinet/update'
   # path = Dir.getwd
