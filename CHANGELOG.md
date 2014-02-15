@@ -1,4 +1,4 @@
-## v1.2.1:
+## v1.2.0:
 
 * Run commands from current directory if not otherwise specified with -o
 * Added `cabinet update` to update cookbook the cookbook you are currently in.
