@@ -9,7 +9,7 @@ class Cabinet
   def self.init(cookbook_name, options, cookbook_path)
     init_chef(cookbook_name, options, cookbook_path)
     init_git(cookbook_name, options, cookbook_path)
-    init_berkshelf(cookbook_name, options,cookbook_path)
+    init_berkshelf(cookbook_name, options, cookbook_path)
     init_kitchen(cookbook_name, cookbook_path)
     init_spec(cookbook_name, cookbook_path)
     write_configs(cookbook_name, options, cookbook_path)
@@ -21,15 +21,13 @@ class Cabinet
     require 'chef/knife/cookbook_create'
     create_cookbook = Chef::Knife::CookbookCreate.new
     create_cookbook.name_args = [cookbook_name]
-    puts cookbook_path + 'cookbook path 1'
     create_cookbook.config[:cookbook_path]      = options[:path]
-    create_cookbook.config[:cookbook_copyright] = options[:copyright]  || 'YOUR_COMPANY_NAME'
-    create_cookbook.config[:cookbook_license]   = options[:license]    || 'YOUR_EMAIL'
-    create_cookbook.config[:cookbook_email]     = options[:email]      || 'none'
+    create_cookbook.config[:cookbook_copyright] = options[:copyright]  || create_cookbook.config[:cookbook_copyright] || 'YOUR_COMPANY_NAME'
+    create_cookbook.config[:cookbook_license]   = options[:license]    || create_cookbook.config[:cookbook_license] || 'YOUR_EMAIL'
+    create_cookbook.config[:cookbook_email]     = options[:email]      || create_cookbook.config[:cookbook_email] || 'none'
     create_cookbook.run
     %w{ metadata.rb recipes/default.rb }.each do |file|
       puts "\tRewriting #{file}"
-      puts cookbook_path + 'cookbook_path 2'
       contents = "\# Encoding: utf-8\n#{File.read(File.join(cookbook_path, file))}"
       File.open(File.join(cookbook_path, file), 'w') { |f| f.write(contents) }
     end
