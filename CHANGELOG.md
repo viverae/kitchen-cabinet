@@ -1,3 +1,6 @@
+
+* Read knife.rb config for cookbook values if no cli overrides are used
+
 ## v1.2.0:
 
 * Run commands from current directory if not otherwise specified with -o
