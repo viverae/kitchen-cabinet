@@ -25,14 +25,10 @@ class Cabinet
     if File.exists?(File.join(ENV['HOME'], '.chef', 'knife.rb'))
       require 'chef'
       Chef::Config.from_file(File.join(ENV['HOME'], '.chef', 'knife.rb'))
-      create_cookbook.config[:cookbook_copyright] = Chef::Config[:cookbook_copyright]
-      create_cookbook.config[:cookbook_license]   = Chef::Config[:cookbook_license]
-      create_cookbook.config[:cookbook_email]     = Chef::Config[:cookbook_email]
-    else
-      create_cookbook.config[:cookbook_copyright] = options[:copyright]  || 'YOUR_COMPANY_NAME'
-      create_cookbook.config[:cookbook_license]   = options[:license]    || 'YOUR_EMAIL'
-      create_cookbook.config[:cookbook_email]     = options[:email]      || 'testmail'
     end
+    create_cookbook.config[:cookbook_copyright] = options[:copyright]  || Chef::Config[:cookbook_copyright] || 'YOUR_COMPANY_NAME'
+    create_cookbook.config[:cookbook_license]   = options[:license]    || Chef::Config[:cookbook_license]   || 'LICENSE'
+    create_cookbook.config[:cookbook_email]     = options[:email]      || Chef::Config[:cookbook_email]     || 'YOUR_EMAIL'
     create_cookbook.run
     %w{ metadata.rb recipes/default.rb }.each do |file|
       puts "\tRewriting #{file}"
