@@ -74,7 +74,7 @@ class Cabinet
   end
 
   def self.write_configs(cookbook_name, options, cookbook_path)
-    @template = %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Strainerfile .rubocop.yml)
+    @template = %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Rakefile .rubocop.yml)
     puts 'this is the ' + cookbook_name + ' cookbook.'
     require 'kitchen-cabinet/config'
     @template.each do |template|
