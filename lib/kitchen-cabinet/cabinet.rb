@@ -22,9 +22,13 @@ class Cabinet
     create_cookbook = Chef::Knife::CookbookCreate.new
     create_cookbook.name_args = [cookbook_name]
     create_cookbook.config[:cookbook_path]      = options[:path]
-    create_cookbook.config[:cookbook_copyright] = options[:copyright]  || 'YOUR_COMPANY_NAME'
-    create_cookbook.config[:cookbook_license]   = options[:license]    || 'YOUR_EMAIL'
-    create_cookbook.config[:cookbook_email]     = options[:email]      || 'none'
+    if File.exists?(File.join(ENV['HOME'], '.chef', 'knife.rb'))
+      require 'chef'
+      Chef::Config.from_file(File.join(ENV['HOME'], '.chef', 'knife.rb'))
+    end
+    create_cookbook.config[:cookbook_copyright] = options[:copyright]  || Chef::Config[:cookbook_copyright]
+    create_cookbook.config[:cookbook_license]   = options[:license]    || Chef::Config[:cookbook_license]
+    create_cookbook.config[:cookbook_email]     = options[:email]      || Chef::Config[:cookbook_email]
     create_cookbook.run
     %w{ metadata.rb recipes/default.rb }.each do |file|
       puts "\tRewriting #{file}"
