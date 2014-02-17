@@ -1,5 +1,6 @@
-
+## v2.0.0
 * Read knife.rb config for cookbook values if no cli overrides are used
+* Uses Rake to execute tests instead of Strainer (Strainer is being phased out)
 
 ## v1.2.0:
 
