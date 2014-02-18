@@ -7,7 +7,7 @@ About
 
 Inspiration for this gem was taken from [meez](https://github.com/paulczar/meez). It creates an opinionated cookbook complete with testing suites.
 
-Once `cabinet` has finished running, you will have a new cookbook complete with an initialized git repo, chefspec, serverspec, strainer, test-kitchen, guard (with notifications via inotify/fsevent/terminal-notifier), rubocop, foodcritic, berkshelf, and stove.
+Once `cabinet` has finished running, you will have a new cookbook complete with an initialized git repo, chefspec, serverspec, test-kitchen, guard (with notifications via inotify/fsevent/terminal-notifier), rubocop, foodcritic, berkshelf, and stove.
 
 It will automatically create a Gemfile for you with different groups set up for development, testing, etc:
 
@@ -34,7 +34,7 @@ group :release do
 end
 
 group :development do
-  gem 'strainer',         '~> 3.3.0'
+  gem 'rake,			  '~> 10.1'
   gem 'serverspec',       '~> 0.14.2'
   gem 'guard',            '~> 1.8'
   gem 'guard-rubocop',    '~> 0.2'
@@ -72,22 +72,21 @@ Options
 ### Example
 
 `````` bash
-➜  ~  cabinet --cookbook-path ~/Desktop -C Taylor Price -I apachev2 -m tprice@onehealth.com test-cookbook
+➜  ~  cabinet --cookbook-path ~/Desktop -C Taylor Price -I apachev2 -m tprice@onehealth.com test
 * Initializing chef
-** Creating cookbook test-cookbook
-** Creating README for cookbook: test-cookbook
-** Creating CHANGELOG for cookbook: test-cookbook
-** Creating metadata for cookbook: test-cookbook
+** Creating cookbook test
+** Creating README for cookbook: test
+** Creating CHANGELOG for cookbook: test
+** Creating metadata for cookbook: test
 	Rewriting metadata.rb
 	Rewriting recipes/default.rb
-* Initializing knife
 * Initializing git
 * Initializing berkshelf
-      create  Desktop/test-cookbook/Berksfile
-      create  Desktop/test-cookbook/Thorfile
-      create  Desktop/test-cookbook/.gitignore
-         run  git init from "./Desktop/test-cookbook"
-      create  Desktop/test-cookbook/Gemfile
+      create  /Users/tprice/Desktop/test/Berksfile
+      create  /Users/tprice/Desktop/test/Thorfile
+      create  /Users/tprice/Desktop/test/.gitignore
+         run  git init from "/Users/tprice/Desktop/test"
+      create  /Users/tprice/Desktop/test/Gemfile
 * Initializing kitchen
       create  .kitchen.yml
       append  Thorfile
@@ -95,34 +94,16 @@ Options
       append  Gemfile
       append  Gemfile
 You must run `bundle install' to fetch any new gems.
-* Initializing guard
 * Initializing chefspec
-* Initializing strainer
-* Initializing rubocop
-* Initializing foodcritic
 * Initializing serverspec
-* Initializing stove
-this is the test-cookbook cookbook.
-Cookbook test-cookbook created successfully
+this is the test cookbook.
+Cookbook test created successfully
 Next steps...
-  $ cd /Users/tprice/Desktop/test-cookbook
+  $ cd /Users/tprice/Desktop/test
   $ bundle install
   $ bundle exec berks install
-  $ bundle exec strainer test
-
-➜  cd ~/Desktop/test-cookbook
-➜  bundle install
-Fetching gem metadata from https://rubygems.org/
-Fetching additional metadata from https://rubygems.org/
-Resolving dependencies...
-...
-...
-Your bundle is complete!
-➜  bundle exec berks install
-Using test (0.1.0) from metadata
-➜  bundle exec strainer test
-...
-...
+  $ bundle exec rake -T
+  ...
 ``````
 
 And so on!
