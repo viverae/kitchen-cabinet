@@ -42,25 +42,20 @@ Error.opt_error('Please specify some options.', opt_parser) if ARGV.empty?
 
 cookbook_name = ARGV.pop
 
-if options[:path].respond_to?(:to_str)
-  path = File.join(options[:path], cookbook_name)
-  cookbook_path = path
-else
-  options[:path] = Dir.getwd
-  path = Dir.getwd
-  cookbook_path = path # File.join(path, cookbook_name)
-end
+options[:path] = Dir.getwd unless options[:path].respond_to?(:to_str)
+cookbook_path = File.join(options[:path], cookbook_name)
 
 if cookbook_name == 'update'
   require 'kitchen-cabinet/update'
-  cookbook_path = path
+  cookbook_name = File.basename(cookbook_path)
+  cookbook_path = File.join(options[:path], cookbook_name)
   metadata = File.join(cookbook_path, 'metadata.rb')
   if File.exists?(metadata)
-    cookbook_name = File.basename(cookbook_path)
     Update.update_cookbook(cookbook_name, options, cookbook_path)
     exit
   else
     puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)
+    exit
   end
 end
 
@@ -68,6 +63,7 @@ if options[:update]
   Error.opt_error('You need to create the cookbook first!', opt_parser) unless File.exists?(cookbook_path)
   unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
     Error.opt_error('Make sure you specify -o and a cookbook name!', opt_parser)
+    exit
   end
   if cookbook_name
     require 'kitchen-cabinet/update'
@@ -75,21 +71,9 @@ if options[:update]
     exit
   else
     Error.opt_error('Define a path with `-o` and a cookbook name!', opt_parser)
+    exit
   end
 elsif cookbook_name
   Cabinet.init(cookbook_name, options, cookbook_path)
-  puts "Cookbook #{cookbook_name} created successfully"
-  puts 'Next steps...'
-  puts "  $ cd #{cookbook_path}"
-  puts '  $ bundle install'
-  puts '  $ bundle exec berks install'
-  puts '  $ bundle exec rake -T'
-  puts 'rake integration                  # Run Test Kitchen integration tests'
-  puts 'rake kitchen:all                  # Run all test instances'
-  puts 'rake kitchen:default-ubuntu-1204  # Run default-ubuntu-1204 test instance'
-  puts 'rake spec                         # Run ChefSpec unit tests'
-  puts 'rake style                        # Run all style checks'
-  puts 'rake style:chef                   # Lint Chef cookbooks'
-  puts 'rake style:ruby                   # Run Ruby style checks'
   exit
 end
