@@ -48,7 +48,7 @@ if options[:path].respond_to?(:to_str)
 else
   options[:path] = Dir.getwd
   path = Dir.getwd
-  cookbook_path = path
+  cookbook_path = path #File.join(path, cookbook_name)
 end
 
 if cookbook_name == 'update'
@@ -56,7 +56,7 @@ if cookbook_name == 'update'
   cookbook_path = path
   metadata = File.join(cookbook_path, 'metadata.rb')
   if File.exists?(metadata)
-    cookbook_name = File.basename(File.expand_path(File.dirname(__FILE__)))
+    cookbook_name = File.basename(cookbook_path)
     Update.update_cookbook(cookbook_name, options, cookbook_path)
     exit
   else
