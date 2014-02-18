@@ -46,34 +46,16 @@ options[:path] = Dir.getwd unless options[:path].respond_to?(:to_str)
 cookbook_name = options[:path] if cookbook_name == 'update'
 cookbook_path = File.join(options[:path], cookbook_name)
 
-if cookbook_name == 'update'
-  require 'kitchen-cabinet/update'
+if cookbook_name == 'update' || options[:update]
   metadata = File.join(cookbook_path, 'metadata.rb')
   if File.exists?(metadata)
-    options [:update] = true
-    # Update.update_cookbook(cookbook_name, options, cookbook_path)
-    # exit
+    require 'kitchen-cabinet/update'
+    Update.update_cookbook(cookbook_name, options, cookbook_path)
   else
     puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)
     exit
   end
-end
-
-if options[:update]
-  Error.opt_error('You need to create the cookbook first!', opt_parser) unless File.exists?(cookbook_path)
-  unless options[:path].respond_to?(:to_str) && (cookbook_name.is_a? String)
-    Error.opt_error('Make sure you specify -o and a cookbook name!', opt_parser)
-    exit
-  end
-  if cookbook_name
-    require 'kitchen-cabinet/update'
-    Update.update_cookbook(cookbook_name, options, cookbook_path)
-    exit
-  else
-    Error.opt_error('Define a path with `-o` and a cookbook name!', opt_parser)
-    exit
-  end
-elsif cookbook_name
+elsif cookbook_name.respond_to?(:to_str)
   Cabinet.init(cookbook_name, options, cookbook_path)
   exit
 end
