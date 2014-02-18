@@ -1,3 +1,8 @@
+## v2.0.1
+* Fixed `cabinet update` command.
+* Vastly simplified bin logic
+* Rake still runs tests, but soon it will be used just for releases (Guard runs tests already)
+
 ## v2.0.0
 * Read knife.rb config for cookbook values if no cli overrides are used
 * Uses Rake to execute tests instead of Strainer (Strainer is being phased out)
