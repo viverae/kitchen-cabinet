@@ -51,11 +51,12 @@ if cookbook_name == 'update' || options[:update]
   if File.exists?(metadata)
     require 'kitchen-cabinet/update'
     Update.update_cookbook(cookbook_name, options, cookbook_path)
+    exit
   else
     puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)
     exit
   end
-elsif cookbook_name.respond_to?(:to_str)
+elsif cookbook_name.respond_to?(:to_str) && cookbook_name != 'update'
   Cabinet.init(cookbook_name, options, cookbook_path)
   exit
 end
