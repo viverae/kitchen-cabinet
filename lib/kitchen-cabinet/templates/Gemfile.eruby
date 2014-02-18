@@ -21,7 +21,7 @@ group :release do
 end
 
 group :development do
-  gem 'rake,			  '~> 10.1'
+  gem 'rake,'			  '~> 10.1'
   gem 'serverspec',       '~> 0.14.2'
   gem 'guard',            '~> 1.8'
   gem 'guard-rubocop',    '~> 0.2'
