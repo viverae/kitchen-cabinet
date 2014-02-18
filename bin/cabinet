@@ -47,7 +47,7 @@ options[:update] = true if cookbook_name == 'update'
 if options[:path].respond_to?(:to_str)
   cookbook_path = File.join(options[:path], cookbook_name)
 else
- options[:path] = Dir.getwd
+  options[:path] = Dir.getwd
 end
 
 if cookbook_name == 'update'
