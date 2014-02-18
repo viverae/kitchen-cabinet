@@ -2,6 +2,9 @@
 * Read knife.rb config for cookbook values if no cli overrides are used
 * Uses Rake to execute tests instead of Strainer (Strainer is being phased out)
 
+####Known bugs:
+* `cabinet update` does not work.
+
 ## v1.2.0:
 
 * Run commands from current directory if not otherwise specified with -o

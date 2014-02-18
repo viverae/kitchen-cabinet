@@ -43,20 +43,21 @@ Error.opt_error('Please specify some options.', opt_parser) if ARGV.empty?
 cookbook_name = ARGV.pop
 
 options[:path] = Dir.getwd unless options[:path].respond_to?(:to_str)
-cookbook_name = options[:path] if cookbook_name == 'update'
+cookbook_name = File.basename(options[:path]) if cookbook_name == 'update'
 cookbook_path = File.join(options[:path], cookbook_name)
 
 if cookbook_name == 'update' || options[:update]
   metadata = File.join(cookbook_path, 'metadata.rb')
   if File.exists?(metadata)
     require 'kitchen-cabinet/update'
+    puts 'breakpoint - right before update'
     Update.update_cookbook(cookbook_name, options, cookbook_path)
     exit
   else
     puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)
     exit
   end
-elsif cookbook_name.respond_to?(:to_str) && cookbook_name != 'update'
+elsif cookbook_name.respond_to?(:to_str) && !(cookbook_name != 'update')
   Cabinet.init(cookbook_name, options, cookbook_path)
   exit
 end
