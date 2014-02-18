@@ -58,6 +58,7 @@ Procfile
 .kitchen/*
 .rubocop.yml
 .coverage/*
+Rakefile
 
 # SCM #
 #######

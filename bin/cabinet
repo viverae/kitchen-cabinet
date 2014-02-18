@@ -26,7 +26,7 @@ opt_parser = OptionParser.new do |opt|
   opt.on('-m', '--email EMAIL', 'The  email  address  for the individual who maintains the cookbook.') do |email|
     options[:email] = email
   end
-  opt.on('-u', '--update', 'Update the Gemfile, Chefignore, Guardfile, rubocop.yml, and the Strainerfile.') do
+  opt.on('-u', '--update', 'Update the Gemfile, Chefignore, Guardfile, rubocop.yml, and the Rakefile.') do
     options[:update] = true
   end
   opt.on('-h', '--help', 'help') do
@@ -87,6 +87,13 @@ elsif cookbook_name
   puts "  $ cd #{cookbook_path}"
   puts '  $ bundle install'
   puts '  $ bundle exec berks install'
-  puts '  $ bundle exec strainer test'
+  puts '  $ bundle exec rake -T'
+  puts 'rake integration                  # Run Test Kitchen integration tests'
+  puts 'rake kitchen:all                  # Run all test instances'
+  puts 'rake kitchen:default-ubuntu-1204  # Run default-ubuntu-1204 test instance'
+  puts 'rake spec                         # Run ChefSpec unit tests'
+  puts 'rake style                        # Run all style checks'
+  puts 'rake style:chef                   # Lint Chef cookbooks'
+  puts 'rake style:ruby                   # Run Ruby style checks'
   exit
 end
