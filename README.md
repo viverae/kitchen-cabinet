@@ -47,6 +47,8 @@ group :development do
 end
 ``````
 
+* The versions in the README may get out of date. Please look in lib/kitchen-cabinet/templates for the up-to-date Gemfile.
+
 The goal of this project is to prevent any manual setup of the cookbook environment. We used to copy Gemfiles and other configurations from cookbook to cookbook, making changes as needed. That quickly gets messy as things get out of date! With `cabinet`, every project starts with the same templated base.
 
 Install
@@ -61,13 +63,17 @@ Usage
 Usage: cabinet [options] <cookbook name>
 
 Options
-    -o, --cookbook-path USERNAME     The directory where the cookbook will be created
+    -o, --cookbook-path PATH         The directory where the cookbook will be created.
     -C, --copyright COPYRIGHT_HOLDER The  name  of  the  copyright holder.
     -I, --license LICENSE            The type of license under which a cookbook is distributed: apachev2, gplv2, gplv3, mit, or none (default).
     -m, --email EMAIL                The  email  address  for the individual who maintains the cookbook.
-	-u, --update				  	 This flag allows you the option to update an existing cookbook[beta]
+    -u, --update                     Update the Gemfile, Chefignore, Guardfile, rubocop.yml, and the Rakefile.
     -h, --help                       help
 ```
+
+If you do not specify any options, `cabinet` will assume you want the defaults - it will read these from your knife.rb if available.
+
+If you do not specify `-o` for a path to the directory you want to create your cookbook in, `cabinet` will create the new cookbook in your current directory. Likewise, if you say `cabinet update`, it will look in your current directory (which should be inside the cookbook) for files to update.
 
 ### Example
 
