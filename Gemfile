@@ -11,7 +11,7 @@ end
 
 group :integration do
   gem 'test-kitchen',    '~> 1.1', '>= 1.1.0'
-  gem 'kitchen-vagrant'
+  gem 'kitchen-vagrant', '~> 0', '>= 0.14.0'
 end
 
 group :release do
@@ -21,6 +21,8 @@ group :release do
 end
 
 group :development do
+  gem 'rake',     			  '~> 10.1', '>= 10.1.0'
+  gem 'serverspec',       '~> 0.14', '>= 0.14.2'
   gem 'guard',            '~> 2.5', '>= 2.5.0'
   gem 'guard-rubocop',    '~> 1.0', '>= 1.0.2'
   gem 'guard-foodcritic', '~> 1.0', '>= 1.0.0'
