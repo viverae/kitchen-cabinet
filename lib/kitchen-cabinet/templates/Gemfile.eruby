@@ -23,11 +23,11 @@ end
 group :development do
   gem 'rake',     			  '~> 10.1', '>= 10.1.0'
   gem 'serverspec',       '~> 0.14', '>= 0.14.2'
-  gem 'guard',            '~> 2.5', '>= 2.5.0'
-  gem 'guard-rubocop',    '~> 1.0', '>= 1.0.2'
+  gem 'guard',            '~> 1.8', '>= 1.8.3'
+  gem 'guard-rubocop',    '~> 0.2', '>= 0.2.2'
   gem 'guard-foodcritic', '~> 1.0', '>= 1.0.0'
   gem 'guard-kitchen',    '~> 0.0', '>= 0.0.0'
-  gem 'guard-rspec',      '~> 4.2', '>= 4.2.7'
+  gem 'guard-rspec',      '~> 3.1', '>= 3.1.0'
   gem 'rb-fsevent', :require => false
   gem 'rb-inotify', :require => false
   gem 'terminal-notifier-guard', :require => false
