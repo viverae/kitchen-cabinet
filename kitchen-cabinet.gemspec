@@ -1,6 +1,3 @@
-$:.unshift File.expand_path('../lib', __FILE__)
-require 'kitchen-cabinet/version'
-
 Gem::Specification.new do |s|
   s.name = "kitchen-cabinet"
   s.version = '2.0.1'
