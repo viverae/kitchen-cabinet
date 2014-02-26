@@ -18,14 +18,6 @@ class Cabinet
     puts "  $ cd #{cookbook_path}"
     puts '  $ bundle install'
     puts '  $ bundle exec berks install'
-    puts '  $ bundle exec rake -T'
-    puts 'rake integration                  # Run Test Kitchen integration tests'
-    puts 'rake kitchen:all                  # Run all test instances'
-    puts 'rake kitchen:default-ubuntu-1204  # Run default-ubuntu-1204 test instance'
-    puts 'rake spec                         # Run ChefSpec unit tests'
-    puts 'rake style                        # Run all style checks'
-    puts 'rake style:chef                   # Lint Chef cookbooks'
-    puts 'rake style:ruby                   # Run Ruby style checks'
   end
 
   def self.init_chef(cookbook_name, options, cookbook_path)
@@ -87,7 +79,7 @@ class Cabinet
   end
 
   def self.write_configs(cookbook_name, options, cookbook_path)
-    @template = %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Rakefile .rubocop.yml)
+    @template = %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Thorfile .rubocop.yml)
     puts 'this is the ' + cookbook_name + ' cookbook.'
     require 'kitchen-cabinet/config'
     @template.each do |template|
