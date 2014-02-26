@@ -15,7 +15,6 @@ Berksfile.lock
 .idea/dataSources.ids
 
 # Bundler
-Gemfile.lock
 .bundle/*
 
 # test-kitchen
