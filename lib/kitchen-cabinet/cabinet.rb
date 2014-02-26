@@ -40,11 +40,9 @@ class Cabinet
       contents = "\# Encoding: utf-8\n#{File.read(File.join(cookbook_path, file))}"
       File.open(File.join(cookbook_path, file), 'w') { |f| f.write(contents) }
     end
-    %w{ metadata.rb }.each do |file_name|
-      text = File.read(file_name)
-      puts text.gsub(/version          '0.1.0'/, "IO.read(File.join(File.dirname(__FILE__), 'VERSION')) rescue \"0.0.1\"")
-      File.open(file_name, 'w') { |file| file.puts output_of_gsub }
-    end
+    metadata_replace = File.read(File.join(cookbook_path, 'metadata.rb'))
+    replace = metadata_replace.gsub(/version          '0.1.0'/, "version IO.read(File.join(File.dirname(__FILE__), 'VERSION')) rescue \"0.0.1\"")
+    File.open(File.join(cookbook_path, 'metadata.rb'), 'w') { |file| file.puts replace }
   end
 
   def self.init_git(cookbook_name, options, cookbook_path)
