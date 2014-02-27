@@ -26,7 +26,7 @@ opt_parser = OptionParser.new do |opt|
   opt.on('-m', '--email EMAIL', 'The  email  address  for the individual who maintains the cookbook.') do |email|
     options[:email] = email
   end
-  opt.on('-u', '--update', 'Update the Gemfile, Chefignore, Guardfile, rubocop.yml, and the Rakefile.') do
+  opt.on('-u', '--update', 'Update the Gemfile, Chefignore, Guardfile, rubocop.yml, and the Thorfile.') do
     options[:update] = true
   end
   opt.on('-h', '--help', 'help') do

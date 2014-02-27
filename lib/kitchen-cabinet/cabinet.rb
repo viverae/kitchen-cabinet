@@ -41,7 +41,7 @@ class Cabinet
       File.open(File.join(cookbook_path, file), 'w') { |f| f.write(contents) }
     end
     metadata_replace = File.read(File.join(cookbook_path, 'metadata.rb'))
-    replace = metadata_replace.gsub(/version          '0.1.0'/, "version IO.read(File.join(File.dirname(__FILE__), 'VERSION'))")
+    replace = metadata_replace.gsub(/version          '0.1.0'/, "version IO.read(File.join(File.dirname(__FILE__), 'VERSION')) rescue \"0.1.0\"")
     File.open(File.join(cookbook_path, 'metadata.rb'), 'w') { |file| file.puts replace }
   end
 
