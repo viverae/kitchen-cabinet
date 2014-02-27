@@ -19,7 +19,6 @@ EOF
   s.files = `git ls-files`.split($/)
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   
-  s.add_runtime_dependency 'chef', '~> 11.8', '>= 11.8.0'
   s.add_runtime_dependency 'test-kitchen', '~> 1.1', '>= 1.1.1'
   s.add_runtime_dependency 'bundler', '~> 1.5', '>= 1.5.1'
   s.add_runtime_dependency 'berkshelf', '~> 2.0', '>= 2.0.12'
