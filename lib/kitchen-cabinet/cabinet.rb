@@ -23,6 +23,16 @@ class Cabinet
   def self.init_chef(cookbook_name, options, cookbook_path)
     tool = 'chef'
     puts "* Initializing #{tool}"
+    if File.exists?('/opt/chef')
+      ENV['GEM_HOME'] = '/opt/chef/embedded/lib/ruby/gems/1.9.1'
+    elsif Gem::Specification.find_by_name('chef')
+      GEM_HOME
+    else
+      puts "You don't appear to have #{tool} installed."
+      puts 'Please install the gem or omnibus version - `gem install chef` or http://www.getchef.com/chef/install/'
+      exit
+    end
+    puts "Using #{tool} from " + ENV['GEM_HOME']
     require 'chef/knife/cookbook_create'
     create_cookbook = Chef::Knife::CookbookCreate.new
     create_cookbook.name_args = [cookbook_name]
