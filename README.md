@@ -56,6 +56,8 @@ Install
 
 `gem install kitchen-cabinet`
 
+* In order to accomodate the most different use types, `kitchen-cabinet` supports omnibus and gem installations of chef. As such, it does not manage chef installation for you. Please install chef yourself before trying to use `kitchen-cabinet`.
+
 Usage
 =====
 
