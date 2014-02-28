@@ -32,6 +32,17 @@ class Cabinet
     end
   end
 
+  def self.chef_rewrite(cookbook_path)
+    %w{ metadata.rb recipes/default.rb }.each do |file|
+      puts "\tRewriting #{file}"
+      contents = "\# Encoding: utf-8\n#{File.read(File.join(cookbook_path, file))}"
+      File.open(File.join(cookbook_path, file), 'w') { |f| f.write(contents) }
+    end
+    metadata_replace = File.read(File.join(cookbook_path, 'metadata.rb'))
+    replace = metadata_replace.gsub(/version          '0.1.0'/, "version IO.read(File.join(File.dirname(__FILE__), 'VERSION')) rescue \"0.1.0\"")
+    File.open(File.join(cookbook_path, 'metadata.rb'), 'w') { |file| file.puts replace }
+  end
+
   def self.init_chef(cookbook_name, options, cookbook_path)
     tool = 'chef'
     puts "* Initializing #{tool}"
@@ -50,17 +61,6 @@ class Cabinet
     create_cookbook.config[:cookbook_email]     = options[:email]      || Chef::Config[:cookbook_email]
     create_cookbook.run
     chef_rewrite
-  end
-
-  def self.chef_rewrite(cookbook_path)
-    %w{ metadata.rb recipes/default.rb }.each do |file|
-      puts "\tRewriting #{file}"
-      contents = "\# Encoding: utf-8\n#{File.read(File.join(cookbook_path, file))}"
-      File.open(File.join(cookbook_path, file), 'w') { |f| f.write(contents) }
-    end
-    metadata_replace = File.read(File.join(cookbook_path, 'metadata.rb'))
-    replace = metadata_replace.gsub(/version          '0.1.0'/, "version IO.read(File.join(File.dirname(__FILE__), 'VERSION')) rescue \"0.1.0\"")
-    File.open(File.join(cookbook_path, 'metadata.rb'), 'w') { |file| file.puts replace }
   end
 
   def self.init_git(cookbook_name, options, cookbook_path)
