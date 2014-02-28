@@ -49,6 +49,10 @@ class Cabinet
     create_cookbook.config[:cookbook_license]   = options[:license]    || Chef::Config[:cookbook_license]
     create_cookbook.config[:cookbook_email]     = options[:email]      || Chef::Config[:cookbook_email]
     create_cookbook.run
+    chef_rewrite
+  end
+
+  def self.chef_rewrite(cookbook_path)
     %w{ metadata.rb recipes/default.rb }.each do |file|
       puts "\tRewriting #{file}"
       contents = "\# Encoding: utf-8\n#{File.read(File.join(cookbook_path, file))}"
