@@ -110,7 +110,7 @@ Next steps...
   $ cd /Users/tprice/Desktop/test
   $ bundle install
   $ bundle exec berks install
-  $ bundle exec rake -T
+  $ bundle exec guard
   ...
 ``````
 

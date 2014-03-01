@@ -60,7 +60,7 @@ class Cabinet
     create_cookbook.config[:cookbook_license]   = options[:license]    || Chef::Config[:cookbook_license]
     create_cookbook.config[:cookbook_email]     = options[:email]      || Chef::Config[:cookbook_email]
     create_cookbook.run
-    chef_rewrite
+    chef_rewrite(cookbook_path)
   end
 
   def self.init_git(cookbook_name, options, cookbook_path)
