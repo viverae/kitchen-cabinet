@@ -24,7 +24,7 @@ class Cabinet
     if File.exists?('/opt/chef')
       ENV['GEM_HOME'] = '/opt/chef/embedded/lib/ruby/gems/1.9.1'
     elsif Gem::Specification.find_by_name('chef')
-      GEM_HOME
+      ENV['GEM_HOME']
     else
       puts 'You don\'t appear to have chef installed.'
       puts 'Please install the gem or omnibus version - `gem install chef` or http://www.getchef.com/chef/install/'
