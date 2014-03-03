@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.summary = 'Initializes a chef cookbook repo with relevant tools'
   s.description = <<EOF
 `kitchen-cabinet` will create a chef cookbook skeleton complete with testing suite including:
-    berkshelf, chefspec, test kitchen, strainer, foodcritic, rubocop, serverspec, stove, and guard. It also creates a gemfile suitable for use in CI.
+    berkshelf, chefspec, test-kitchen, thor, foodcritic, rubocop, serverspec, thor-scmversion, and guard. It also creates a gemfile suitable for use in CI.
 
 EOF
   s.authors = ['Taylor Price']
@@ -25,5 +25,4 @@ EOF
   s.add_runtime_dependency 'git', '~> 1.2', '>= 1.2.6'
   s.add_runtime_dependency 'erubis', '~> 2.7', '>= 2.7.0'
   s.add_development_dependency 'rspec', '~> 2.14', '>= 2.14.1'
-  s.add_development_dependency 'rake', '~> 10.1', '>= 10.1.1'
 end
