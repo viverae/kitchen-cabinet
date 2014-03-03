@@ -23,6 +23,8 @@ class Cabinet
   def self.chef_check
     if File.exists?('/opt/chef')
       ENV['GEM_HOME'] = '/opt/chef/embedded/lib/ruby/gems/1.9.1'
+    elsif File.exists?('C:\opscode\chef\\')
+      ENV['GEM_HOME'] = 'C:\opscode\chef\embedded\lib\ruby\gems\1.9.1'
     elsif Gem::Specification.find_by_name('chef')
       ENV['GEM_HOME']
     else
