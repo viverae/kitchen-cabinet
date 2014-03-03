@@ -3,6 +3,7 @@ AllCops:
     - test/**
     - vendor/**
     - ruby/**
+    - pkg/**
 
 AlignParameters:
   Enabled: false
