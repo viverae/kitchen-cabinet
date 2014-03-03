@@ -1,5 +1,6 @@
 require 'bundler'
 require 'bundler/setup'
+require 'thor/scmversion'
 # Thor tasks for different environments
 
 # Runs rubocop
@@ -23,11 +24,10 @@ end
 class Ci < Thor
   desc 'publish', 'Task for CI that publishes cookbook.'
   def publish
-    require 'thor/scmversion'
     require 'thor/rake_compat'
-    `bundle exec thor version:bump patch`
+    `thor version:bump patch`
     `ssh-agent bash -c 'ssh-add /var/lib/jenkins/.ssh/jenkinsbuild_rsa; git push --tags'`
-    `bundle exec berks upload`
+    `berks upload`
   end
 end
 
@@ -41,7 +41,6 @@ class Upload < Thor
   end
   desc 'scm', 'runs prepare and allows for version bump override'
   def scm
-    require 'thor/scmversion'
     invoke 'prepare'
   end
 end
