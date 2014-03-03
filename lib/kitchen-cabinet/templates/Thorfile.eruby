@@ -1,1 +1,47 @@
-require 'thor/scmversion'
+require 'bundler'
+require 'bundler/setup'
+# Thor tasks for different environments
+
+# Runs rubocop
+class Style < Thor
+  desc 'check', 'Run rubocop on all Ruby files'
+  def check
+    `foodcritic -f any . --tags ~FC007 --tags ~FC015 --tags ~FC023`
+    `rspec --format RspecJunitFormatter --out reports/test-results.xml`
+    `rubocop --require rubocop/formatter/checkstyle_formatter --format Rubocop::Formatter::CheckstyleFormatter --out reports/checkstyle-results.xml`
+    puts 'success'
+    begin
+      require 'kitchen/thor_tasks'
+      Kitchen::ThorTasks.new
+    rescue LoadError
+      puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
+    end
+  end
+end
+
+# publish cookbook from CI
+class Ci < Thor
+  desc 'publish', 'Task for CI that publishes cookbook.'
+  def publish
+    require 'thor/scmversion'
+    require 'thor/rake_compat'
+    `bundle exec thor version:bump patch`
+    `ssh-agent bash -c 'ssh-add /var/lib/jenkins/.ssh/jenkinsbuild_rsa; git push --tags'`
+    `bundle exec berks upload`
+  end
+end
+
+# Runs Ci tasks as well as upload for actual CI
+class Upload < Thor
+  desc 'prepare', 'Runs tests and uploads to git if successful'
+  def prepare
+    invoke 'style:check'
+    require 'git'
+    Git.init.push
+  end
+  desc 'scm', 'runs prepare and allows for version bump override'
+  def scm
+    require 'thor/scmversion'
+    invoke 'prepare'
+  end
+end
