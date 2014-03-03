@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "kitchen-cabinet"
-  s.version = '2.0.1'
+  s.version = '2.1.0'
   s.date = Time.now.strftime("%Y-%m-%d")
   s.homepage = 'https://github.com/onehealth/kitchen-cabinet'
   s.summary = 'Initializes a chef cookbook repo with relevant tools'

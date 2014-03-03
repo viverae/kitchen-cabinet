@@ -5,7 +5,7 @@
 * Added Thorfile - thor-scmversion. Will possibly add tests in to thorfile for easier CI setup in the future.
 * Moved metadata version to external VERSION file.
 * Allow Gemfile.lock to be commited for --deployment mode bundler.
-* Check for omnibus/gem chef and use the already installed version. If you have no version of chef installed, this tells you to install it.
+* Check for omnibus/gem chef and use the already installed version. If you have no version of chef installed, this tells you to install it. Definitely supports Linux/OS X, probably supports Windows as well.
 
 ## v2.0.1
 * Fixed `cabinet update` command.
