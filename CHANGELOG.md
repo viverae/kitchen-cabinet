@@ -1,3 +1,5 @@
+* thor-scmversion is configured to bump patch version unless otherwise specified in your commit.
+
 ## v2.1.0
 * Updated dependencies
 * Made the Gemfile a bit less restricive by locking minor version and allowing patch updates.
