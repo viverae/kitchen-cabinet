@@ -25,7 +25,7 @@ class Ci < Thor
   desc 'publish', 'Task for CI that publishes cookbook.'
   def publish
     require 'thor/rake_compat'
-    `thor version:bump patch`
+    `thor version:bump auto -d patch`
     `ssh-agent bash -c 'ssh-add /var/lib/jenkins/.ssh/jenkinsbuild_rsa; git push --tags'`
     `berks upload`
   end
