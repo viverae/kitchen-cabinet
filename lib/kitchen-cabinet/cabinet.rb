@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
-
 # Cabinet helps create and maintain cookbooks
 # complete with an opinionated testing suite.
 class Cabinet

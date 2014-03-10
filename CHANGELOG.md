@@ -1,3 +1,5 @@
+* Modified Berksfile so that site: opscode is commented out. This should make issues with new cookbook versions accidentally being inserted into your chef server much less common.
+* Now your Berksfile.lock files will be committed - we discovered there can be some dependency issues same as with the Gemfile.lock, which we also allow to be comited.
 * thor-scmversion is configured to bump patch version unless otherwise specified in your commit.
 
 ## v2.1.0
