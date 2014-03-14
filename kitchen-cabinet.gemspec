@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
-  s.name = "kitchen-cabinet"
-  s.version = '2.1.0'
-  s.date = Time.now.strftime("%Y-%m-%d")
+  s.name = 'kitchen-cabinet'
+  s.version = '2.1.1'
+  s.date = Time.now.strftime('%Y-%m-%d')
   s.homepage = 'https://github.com/onehealth/kitchen-cabinet'
   s.summary = 'Initializes a chef cookbook repo with relevant tools'
   s.description = <<EOF
@@ -18,7 +18,7 @@ EOF
   s.test_files  = s.files.grep(%r{^(test|spec|features)/})
   s.files = `git ls-files`.split($/)
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  
+
   s.add_runtime_dependency 'test-kitchen', '~> 1.1', '>= 1.1.1'
   s.add_runtime_dependency 'bundler', '~> 1.5', '>= 1.5.1'
   s.add_runtime_dependency 'berkshelf', '~> 2.0', '>= 2.0.12'
