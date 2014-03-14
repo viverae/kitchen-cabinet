@@ -68,7 +68,7 @@ class Cabinet
     tool = 'git'
     puts "* Initializing #{tool}"
     require 'git'
-    Git.init(cookbook_path, repository: cookbook_path)
+    Git.init(cookbook_path, git_dir: "#{cookbook_path}/.git")
   end
 
   def self.init_berkshelf(cookbook_name, options, cookbook_path)
