@@ -20,9 +20,9 @@ class Cabinet
   end
 
   def self.chef_check
-    if File.exists?('/opt/chef')
+    if File.exist?('/opt/chef')
       ENV['GEM_HOME'] = '/opt/chef/embedded/lib/ruby/gems/1.9.1'
-    elsif File.exists?('C:\opscode\chef\\')
+    elsif File.exist?('C:\opscode\chef\\')
       ENV['GEM_HOME'] = 'C:\opscode\chef\embedded\lib\ruby\gems\1.9.1'
     elsif Gem::Specification.find_by_name('chef')
       ENV['GEM_HOME']
@@ -34,7 +34,7 @@ class Cabinet
   end
 
   def self.chef_rewrite(cookbook_path)
-    %w{ metadata.rb recipes/default.rb }.each do |file|
+    %w(metadata.rb recipes/default.rb).each do |file|
       puts "\tRewriting #{file}"
       contents = "\# Encoding: utf-8\n#{File.read(File.join(cookbook_path, file))}"
       File.open(File.join(cookbook_path, file), 'w') { |f| f.write(contents) }
@@ -53,7 +53,7 @@ class Cabinet
     create_cookbook = Chef::Knife::CookbookCreate.new
     create_cookbook.name_args = [cookbook_name]
     create_cookbook.config[:cookbook_path]      = options[:path]
-    if File.exists?(File.join(ENV['HOME'], '.chef', 'knife.rb'))
+    if File.exist?(File.join(ENV['HOME'], '.chef', 'knife.rb'))
       require 'chef'
       Chef::Config.from_file(File.join(ENV['HOME'], '.chef', 'knife.rb'))
     end

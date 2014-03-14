@@ -58,7 +58,7 @@ else
 end
 
 if options[:update]
-  if File.exists?(File.join(cookbook_path, 'metadata.rb'))
+  if File.exist?(File.join(cookbook_path, 'metadata.rb'))
     require 'kitchen-cabinet/update'
     Update.update_cookbook(cookbook_name, options, cookbook_path)
     exit
