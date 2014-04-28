@@ -47,21 +47,15 @@ class Cabinet
   def self.init_chef(cookbook_name, options, cookbook_path)
     tool = 'chef'
     puts "* Initializing #{tool}"
-    chef_check
-    puts "Using #{tool} from " + ENV['GEM_HOME']
-    require 'chef/knife/cookbook_create'
-    create_cookbook = Chef::Knife::CookbookCreate.new
-    create_cookbook.name_args = [cookbook_name]
-    create_cookbook.config[:cookbook_path]      = options[:path]
+    cookbook_path = options[:path]
     if File.exist?(File.join(ENV['HOME'], '.chef', 'knife.rb'))
-      require 'chef'
-      Chef::Config.from_file(File.join(ENV['HOME'], '.chef', 'knife.rb'))
+      `knife cookbook create #{cookbook_name} -o #{cookbook_path} -r md`
+    else
+      copyright = options[:copyright]  || 'Copyright_Holder'
+      license   = options[:license]    || 'License_Type'
+      email     = options[:email]      || 'Email'
+      `knife cookbook create #{cookbook_name} -C #{copyright} -I #{license} -m #{email} -o #{cookbook_path} -r md`
     end
-    create_cookbook.config[:cookbook_copyright] = options[:copyright]  || Chef::Config[:cookbook_copyright]
-    create_cookbook.config[:cookbook_license]   = options[:license]    || Chef::Config[:cookbook_license]
-    create_cookbook.config[:cookbook_email]     = options[:email]      || Chef::Config[:cookbook_email]
-    create_cookbook.run
-    chef_rewrite(cookbook_path)
   end
 
   def self.init_git(cookbook_name, options, cookbook_path)

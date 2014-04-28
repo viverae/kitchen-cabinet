@@ -18,6 +18,7 @@ EOF
   s.test_files  = s.files.grep(%r{^(test|spec|features)/})
   s.files = `git ls-files`.split($/)
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  @s.extensions = 'ext/mkrf_conf.rb'@
 
   s.add_runtime_dependency 'test-kitchen', '~> 1.1', '>= 1.1.1'
   s.add_runtime_dependency 'bundler', '~> 1.5', '>= 1.5.1'
