@@ -20,9 +20,6 @@ EOF
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.extensions = 'ext/mkrf_conf.rb'
 
-  s.add_runtime_dependency 'test-kitchen', '~> 1.1', '>= 1.1.1'
-  s.add_runtime_dependency 'bundler', '~> 1.5', '>= 1.5.1'
-  s.add_runtime_dependency 'berkshelf', '~> 2.0', '>= 2.0.12'
   s.add_runtime_dependency 'git', '~> 1.2', '>= 1.2.6'
   s.add_runtime_dependency 'erubis', '~> 2.7', '>= 2.7.0'
   s.add_development_dependency 'rspec', '~> 2.14', '>= 2.14.1'
