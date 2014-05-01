@@ -16,9 +16,9 @@ EOF
   s.required_ruby_version = '>= 1.9.3'
   s.require_paths = ['lib']
   s.test_files  = s.files.grep(%r{^(test|spec|features)/})
-  s.files = `git ls-files`.split($/)
+  s.files = `git ls-files`.split($RS)
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  @s.extensions = 'ext/mkrf_conf.rb'@
+  s.extensions = 'ext/mkrf_conf.rb'
 
   s.add_runtime_dependency 'test-kitchen', '~> 1.1', '>= 1.1.1'
   s.add_runtime_dependency 'bundler', '~> 1.5', '>= 1.5.1'
