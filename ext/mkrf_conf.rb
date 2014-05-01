@@ -6,9 +6,19 @@ Gem::Command.build_args = ARGV
 
 inst = Gem::DependencyInstaller.new
 if File.exist?('/opt/chefdk')
-elsif File.exist?('opt/chef')
+  %w(chefspec serverspec guard guard-rubocop guard-foodcritic guard-kitchen guard-rspec rspec).each do |gems|
+    `chef gem install #{gems}`
+  end
+
+elsif File.exist?('/opt/chef')
+  puts 'Consider switching to chefdk or the gem version of chef.'
+  puts 'Some functionality of kitchen-cabinet may not be unavailable with your current setup.'
+  %w(foodcritic rubocop test-kitchen kitchen-vagrant chefspec serverspec guard guard-rubocop guard-foodcritic guard-kitchen guard-rspec rspec).each do |gems|
+    `sudo /opt/chef/embedded/bin/gem install #{gems} --no-ri --no-rdoc`
+  end
 else
   inst.install 'chef', '~> 11.12.2'
+  inst.install 'chefspec', '~> 0.0.0'
 end
 
 # create dummy rakefile to indicate success

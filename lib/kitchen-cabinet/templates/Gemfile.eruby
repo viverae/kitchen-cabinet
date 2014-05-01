@@ -1,28 +1,16 @@
 source 'https://rubygems.org'
 
+<% unless File.exist?('/opt/chefdk') -%>
 gem 'berkshelf', '~> 2.0', '>= 2.0.14'
 
-<% unless File.exist?('/opt/chefdk') -%>
 group :unit do
   gem 'foodcritic',       '~> 3', '>= 3.0.0'
   gem 'rubocop',          '~> 0.18', '>= 0.18.0'
   gem 'chefspec',         '~> 3.2', '>= 3.2.0'
-end
-
-group :integration do
-  gem 'test-kitchen',    '~> 1.1', '>= 1.1.0'
-  gem 'kitchen-vagrant', '~> 0', '>= 0.14.0'
-end
-<% end -%>
-group :release do
-  gem 'rspec_junit_formatter'
-  gem 'rubocop-checkstyle_formatter'
-  gem 'thor-scmversion',  '~> 1.4', '>= 1.4.0'
-  gem 'git',              '~> 1.2', '>= 1.2.6'
+  gem 'serverspec',       '~> 0.14', '>= 0.14.2'
 end
 
 group :development do
-  gem 'serverspec',       '~> 0.14', '>= 0.14.2'
   gem 'guard',            '~> 1.8', '>= 1.8.3'
   gem 'guard-rubocop',    '~> 0.2', '>= 0.2.2'
   gem 'guard-foodcritic', '~> 1.0', '>= 1.0.0'
@@ -31,4 +19,16 @@ group :development do
   gem 'rb-fsevent', :require => false
   gem 'rb-inotify', :require => false
   gem 'terminal-notifier-guard', :require => false
+end
+
+group :integration do
+  gem 'test-kitchen',    '~> 1.2', '>= 1.2.1'
+  gem 'kitchen-vagrant', '~> 0.15', '>= 0.15.0'
+end
+<% end -%>
+group :release do
+  gem 'rspec_junit_formatter'
+  gem 'rubocop-checkstyle_formatter'
+  gem 'thor-scmversion',  '~> 1.4', '>= 1.4.0'
+  gem 'git',              '~> 1.2', '>= 1.2.6'
 end
