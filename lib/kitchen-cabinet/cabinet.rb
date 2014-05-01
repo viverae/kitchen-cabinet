@@ -7,7 +7,7 @@ class Cabinet
   require 'erubis'
   def self.init(cookbook_name, options, cookbook_path)
     init_chef(cookbook_name, options, cookbook_path)
-    init_git(cookbook_name, options, cookbook_path)
+    init_git(cookbook_path)
     init_spec(cookbook_name, cookbook_path)
     write_configs(cookbook_name, options, cookbook_path)
     puts "Cookbook #{cookbook_name} created successfully"
@@ -42,7 +42,7 @@ class Cabinet
     chef_rewrite(cookbook_path)
   end
 
-  def self.init_git(cookbook_name, options, cookbook_path)
+  def self.init_git(cookbook_path)
     puts '* Initializing git'
     require 'git'
     Git.init(cookbook_path, git_dir: "#{cookbook_path}/.git")
@@ -55,11 +55,11 @@ class Cabinet
     end
   end
 
-  def self.write_configs(cookbook_name, options, cookbook_path)
+  def self.write_configs(cookbook_name, cookbook_path)
     puts 'this is the ' + cookbook_name + ' cookbook.'
     require 'kitchen-cabinet/config'
     %w(chefignore .gitignore Gemfile Berksfile .kitchen.yml Guardfile Thorfile .rubocop.yml VERSION).each do |template|
-      Initconfig.write_config(cookbook_name, options, cookbook_path, template)
+      Initconfig.write_config(cookbook_name, cookbook_path, template)
     end
   end
 end
