@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 group :unit do
   gem 'foodcritic',       '~> 3', '>= 3.0.0'
   gem 'rubocop',          '~> 0.21', '>= 0.21.0'
+  gem 'rspec',            '~> 2.14', '>= 2.14.1'
 end
 
 group :development do
