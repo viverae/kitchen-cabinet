@@ -4,7 +4,7 @@ AllCops:
     - vendor/**
     - ruby/**
     - pkg/**
-    - *.gemspec
+    - kitchen-cabinet.gemspec
 
 AlignParameters:
   Enabled: false
