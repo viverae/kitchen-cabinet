@@ -4,6 +4,7 @@ AllCops:
     - vendor/**
     - ruby/**
     - pkg/**
+    - *.gemspec
 
 AlignParameters:
   Enabled: false
