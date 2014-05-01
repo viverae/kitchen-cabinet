@@ -1,3 +1,8 @@
+## v3.0.0
+* kitchen cabinet now shells out for knife, so its compatible with omnibus chef and chefdk
+* instead of always specifying dependencies in a gemfile, kitchen-cabinet will now install things like chefspec directly in the embedded ruby of chefdk or omnibus chef (this prevents having to install the gem version of chef on top of your existing setup)
+* Less runtime dependencies! There's no need to rely on test-kitchen or berkshelf when I'm just going to replace the generic generated templates with generic generated templates of my own!
+
 ## v2.1.1
 * Fixed issue where git would create the contents of .git/ in the main cookbook folder.
 * Modified Berksfile so that site: opscode is commented out. This should make issues with new cookbook versions accidentally being inserted into your chef server much less common.
