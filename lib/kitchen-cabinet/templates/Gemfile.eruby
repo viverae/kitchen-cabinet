@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'berkshelf', '~> 2.0', '>= 2.0.14'
 
+<% unless File.exist?('/opt/chefdk') -%>
 group :unit do
   gem 'foodcritic',       '~> 3', '>= 3.0.0'
   gem 'rubocop',          '~> 0.18', '>= 0.18.0'
@@ -12,7 +13,7 @@ group :integration do
   gem 'test-kitchen',    '~> 1.1', '>= 1.1.0'
   gem 'kitchen-vagrant', '~> 0', '>= 0.14.0'
 end
-
+<% end -%>
 group :release do
   gem 'rspec_junit_formatter'
   gem 'rubocop-checkstyle_formatter'
