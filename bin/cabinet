@@ -60,7 +60,7 @@ end
 if options[:update]
   if File.exist?(File.join(cookbook_path, 'metadata.rb'))
     require 'kitchen-cabinet/update'
-    Update.update_cookbook(cookbook_name, options, cookbook_path)
+    Update.update_cookbook(cookbook_name, cookbook_path)
     exit
   else
     puts Error.opt_error('Specify a path or run from within the cookbook folder!', opt_parser)

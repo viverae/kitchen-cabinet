@@ -9,23 +9,23 @@ class Cabinet
     init_chef(cookbook_name, options, cookbook_path)
     init_git(cookbook_path)
     init_spec(cookbook_name, cookbook_path)
-    write_configs(cookbook_name, options, cookbook_path)
+    write_configs(cookbook_name, cookbook_path)
     puts "Cookbook #{cookbook_name} created successfully"
     puts 'Next steps...'
-    puts "  $ cd #{cookbook_path}"
+    puts '  $ cd ' + cookbook_path + '/' + cookbook_name
     puts '  $ bundle install'
     puts '  $ bundle exec berks install'
   end
 
-  def self.chef_rewrite(cookbook_path)
+  def self.chef_rewrite(cookbook_path, cookbook_name)
     %w(metadata.rb recipes/default.rb).each do |file|
       puts "\tRewriting #{file}"
-      contents = "\# Encoding: utf-8\n#{File.read(File.join(cookbook_path, file))}"
-      File.open(File.join(cookbook_path, file), 'w') { |f| f.write(contents) }
+      contents = "\# Encoding: utf-8\n#{File.read(File.join(cookbook_path, cookbook_name, file))}"
+      File.open(File.join(cookbook_path, cookbook_name, file), 'w') { |f| f.write(contents) }
     end
-    metadata_replace = File.read(File.join(cookbook_path, 'metadata.rb'))
+    metadata_replace = File.read(File.join(cookbook_path, cookbook_name, 'metadata.rb'))
     replace = metadata_replace.gsub(/version          '0.1.0'/, "version IO.read(File.join(File.dirname(__FILE__), 'VERSION')) rescue \"0.1.0\"")
-    File.open(File.join(cookbook_path, 'metadata.rb'), 'w') { |file| file.puts replace }
+    File.open(File.join(cookbook_path, cookbook_name, 'metadata.rb'), 'w') { |file| file.puts replace }
   end
 
   def self.init_chef(cookbook_name, options, cookbook_path)
@@ -39,7 +39,7 @@ class Cabinet
       email     = options[:email]      || 'Email'
       `knife cookbook create #{cookbook_name} -C #{copyright} -I #{license} -m #{email} -o #{cookbook_path} -r md`
     end
-    chef_rewrite(cookbook_path)
+    chef_rewrite(cookbook_path, cookbook_name)
   end
 
   def self.init_git(cookbook_path)
