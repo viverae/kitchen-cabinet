@@ -1,5 +1,5 @@
 AllCops:
-  Excludes:
+  Exclude:
     - test/**
     - vendor/**
 
@@ -15,4 +15,3 @@ MethodLength:
   Max: 30
 RescueModifier:
   Enabled: false
-  
