@@ -7,7 +7,7 @@ Gem::Command.build_args = ARGV
 inst = Gem::DependencyInstaller.new
 if File.exist?('/opt/chefdk')
   %w(chefspec serverspec guard guard-rubocop guard-foodcritic guard-kitchen guard-rspec rspec).each do |gems|
-    `chef gem install #{gems}`
+    `chef gem install #{gems} --no-ri --no-rdoc`
   end
 
 elsif File.exist?('/opt/chef')

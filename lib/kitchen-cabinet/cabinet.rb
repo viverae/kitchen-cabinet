@@ -14,7 +14,7 @@ class Cabinet
     puts 'Next steps...'
     puts '  $ cd ' + cookbook_path + '/' + cookbook_name
     puts '  $ bundle install'
-    puts '  $ bundle exec berks install'
+    puts '  Get Started!'
   end
 
   def self.chef_rewrite(cookbook_path, cookbook_name)

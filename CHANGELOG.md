@@ -1,3 +1,6 @@
+## v3.0.1
+* Updated Gemfile - newer versions, and the gemfile should be usable for development as well as for CI - make use of `bundle install --without` if you do not want tools like berkshelf/thor-scmversion/etc installed in your system ruby.
+
 ## v3.0.0
 * kitchen cabinet now shells out for knife, so its compatible with omnibus chef and chefdk
 * instead of always specifying dependencies in a gemfile, kitchen-cabinet will now install things like chefspec directly in the embedded ruby of chefdk or omnibus chef (this prevents having to install the gem version of chef on top of your existing setup)
