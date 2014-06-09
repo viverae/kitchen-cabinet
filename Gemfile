@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'erubis',             '~>2.7', '>= 2.7.0'
+
 group :unit do
   gem 'rubocop',          '~> 0.21', '>= 0.21.0'
   gem 'rspec',            '~> 2.14', '>= 2.14.1'
