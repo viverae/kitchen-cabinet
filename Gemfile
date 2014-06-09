@@ -8,7 +8,7 @@ group :unit do
 end
 
 group :development do
-  gem 'rake',     			  '~> 10.1', '>= 10.1.0'
+  gem 'rake',     			  '~> 10.3', '>= 10.3.2'
   gem 'guard-rubocop',    '~> 1.1', '>= 1.1.0'
   gem 'rb-fsevent', :require => false
   gem 'rb-inotify', :require => false
